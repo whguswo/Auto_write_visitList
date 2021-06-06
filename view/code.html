@@ -1,0 +1,192 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="src/qrcode.js"></script>
+    <style>
+        #code {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <input id='input' type="text"><button id='makeQR'>qrcode 생성</button>
+    <div id="code"></div>
+    <script>
+        const input = document.querySelector('#input')
+        const button = document.querySelector('#makeQR')
+        const code = document.querySelector('#code')
+        
+        let qrcode = new QRCode(code, {
+	        width : 200,
+	        height : 200
+        });
+        console.log(qrcode)
+
+        button.addEventListener('click', async(e) => {
+            const result = await fetch('/qrHash', {
+                method: 'POST',
+                body: input.value,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            });
+            let data = await result.text();
+            console.log(data)
+            qrcode.makeCode(data)
+        })
+    </script>
+</body>
+</html> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="src/qrcode.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            max-height: 100vh;
+            background-color: aquamarine;
+        }
+        .navigation {
+            position: fixed;
+            width: 60px;
+            height: 100%;
+            background-color: cornflowerblue;
+            transition: 0.5s;
+            overflow: hidden;
+            z-index: 2;
+        }
+        .navigation.active {
+            width: 170px;
+            z-index: 2;
+        }
+        .navigation ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+        .navigation ul li {
+            position: relative;
+            width: 100%;
+            list-style: none;
+        }
+        .navigation ul li a {
+            position: relative;
+            display: block;
+            width: 100%;
+            display: flex;
+            text-decoration: none;
+            color: #fff;
+        }
+        .navigation ul li a .icon{
+            position: relative;
+            display: block;
+            min-width: 60px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+        }
+        .navigation ul li a .fa{
+            font-size: 24px;
+
+        }
+        .navigation ul li a .title{
+            position: relative;
+            display: block;
+            padding: 0 10px;
+            height: 60px;
+            line-height: 60px;
+            text-align: start;
+            white-space: nowrap;
+        }
+        #code {
+            position: absolute;
+            left: 10px;
+            margin: 10px;
+        }
+        #main {
+            position: absolute;
+            left: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <ul>
+            <li id="visit">
+                <a href="/visit">
+                    <span class="icon"><i class="fa fa-thermometer-full" aria-hidden="true"></i></span>
+                    <span class="title">온도측정</span>
+                </a>
+            </li>
+            <li id="addUser">
+                <a href="/addUser">
+                    <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                    <span class="title">사용자 등록</span>
+                </a>
+            </li>
+            <li id="admin">
+                <a href="/login">
+                    <span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
+                    <span class="title">방명록 확인</span>
+                </a>
+            </li>
+            <li id="qrcode">
+                <a href="/code">
+                    <span class="icon"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+                    <span class="title">QRcode</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id="main">
+        <input id='name' type="text"><input id='phone' type="text"><button id='makeQR'>qrcode 생성</button>
+        <div id="code"></div>
+    </div>
+    <script>
+        const nav = document.querySelector('.navigation')
+        nav.addEventListener('click', (e) => {
+            nav.classList.toggle('active')
+        })
+
+        const name = document.querySelector('#name')
+        const phone = document.querySelector('#phone')
+        const button = document.querySelector('#makeQR')
+        const code = document.querySelector('#code')
+        
+        let qrcode = new QRCode(code, {
+	        width : 200,
+	        height : 200
+        });
+        console.log(qrcode)
+
+        button.addEventListener('click', async(e) => {
+            const result = await fetch('/qrHash', {
+                method: 'POST',
+                body: name.value + phone.value,
+                headers: {
+                    'Content-Type': 'text/plain'
+                }
+            });
+            let data = await result.text();
+            console.log(data)
+            qrcode.makeCode(data)
+        })
+    </script>
+</body>
+</html>

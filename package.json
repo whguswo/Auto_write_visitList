@@ -1,0 +1,26 @@
+{
+  "name": "aws-rekognition",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"tsc -w\" \"set NODE_ENV=dev&&nodemon dist/index.js\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.879.0",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.6.6",
+    "python-shell": "^3.0.0",
+    "url": "^0.10.3"
+  },
+  "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
+    "@types/express": "^4.17.12",
+    "@types/mongodb": "^3.6.17",
+    "@types/node": "^15.12.1"
+  }
+}

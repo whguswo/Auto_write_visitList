@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id='compare'>비교!</button>
+    <button id='list'>목록</button>
+    <button id='noUpload'>업로드 없이</button>
+    <script>
+        const compare = document.querySelector('#compare')
+        const list = document.querySelector('#list')
+        const noUpload = document.querySelector('#noUpload')
+
+        compare.addEventListener('click', async () => {
+            const result = await fetch('/compare', {
+                method: 'GET'
+            })
+            let data = await result.text()
+            console.log(data)
+        })
+        list.addEventListener('click', async () => {
+            const result = await fetch('/list', {
+                method: 'GET'
+            })
+            let temp = await result.text()
+            console.log(temp)
+        })
+        noUpload.addEventListener('click', async () => {
+            const result = await fetch('/noUpload', {
+                method: 'GET'
+            })
+            let temp = await result.text()
+            console.log(temp)
+        })
+
+    </script>
+</body>
+
+</html>
