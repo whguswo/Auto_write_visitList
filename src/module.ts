@@ -1,8 +1,18 @@
 import fs from 'fs';
 import { resolve } from 'path';
-const bucket = 'whguswo-bucket'
+import AWS from 'aws-sdk';
+import { Request, Response } from 'express';
+const bucket = 'whguswo-bucket';
 const photo_source = 'source.jpg'
+AWS.config.update({
+    accessKeyId: process.env.AccessKey,
+    secretAccessKey: process.env.SecretKey,
+    region: 'ap-northeast-2'
+})
 
+const s3 = new AWS.S3({
+    apiVersion: '2006-03-01'
+});
 //업로드 함수
 const uploadFile = (fileName:string) => {
     //fileContent는 Buffer
@@ -19,7 +29,7 @@ const uploadFile = (fileName:string) => {
     // });
 
     return new Promise((res, rej) => {
-        s3.upload(params, (err, data) => {
+        s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
             // console.log(`File uploaded successfully. ${data.Location}`);
             if (err) rej(err)
             console.log(`File uploaded successfully. ${data.Location}`)
@@ -29,11 +39,11 @@ const uploadFile = (fileName:string) => {
 
 };
 
-const uploadFileAsBuffer = (Buffer, name, type) => {
+const uploadFileAsBuffer = (buf:Buffer, name:string, type:string) => {
     const params = {
         Bucket: bucket,
         Key: `${name}.${type}`,
-        Body: Buffer,
+        Body: buf,
     };
 
     // s3.upload(params, (err, data) => {
@@ -41,7 +51,7 @@ const uploadFileAsBuffer = (Buffer, name, type) => {
     // });
 
     return new Promise((res, rej) => {
-        s3.upload(params, (err, data) => {
+        s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
             // console.log(`File uploaded successfully. ${data.Location}`);
             if (err) rej(err)
             console.log(`File uploaded successfully. ${data.Location}`)
@@ -52,7 +62,7 @@ const uploadFileAsBuffer = (Buffer, name, type) => {
 };
 
 //삭제 함수
-const removeFile = (fileName) => {
+const removeFile = (fileName:string) => {
 
     const params = {
         Bucket: bucket,
@@ -73,20 +83,20 @@ const removeFile = (fileName) => {
 };
 
 //목록 함수
-const getList = (bucket) => {
+const getList = (bucket:string) => {
 
     const bucketParams = {
         Bucket: bucket,
     };
 
-    let list = []
+    let list:string[] = [];
 
-    return new Promise((res, rej) => {
+    return new Promise((res:(value:string[])=>void, rej) => {
         s3.listObjects(bucketParams, (err, data) => {
             for (let i = 0; i < data.Contents.length; i++) {
                 list.push(data.Contents[i].Key)
             }
-            res(list)
+            res(list);
         });
     })
 }
@@ -131,8 +141,8 @@ const getList = (bucket) => {
 //     })
 // }
 
-const awsRekog = (client, fileName, source) => {
-    return new Promise((resolve, reject) => {
+const awsRekog = (client:AWS.Rekognition, fileName:string, source:Buffer) => {
+    return new Promise((resolve:(value:string)=>void, reject:(value:string)=>void) => {
         const params = {
             SourceImage: {
                 Bytes: source
@@ -152,9 +162,9 @@ const awsRekog = (client, fileName, source) => {
                 reject('noPerson')
             } else if(response.FaceMatches.length === 0) {
                 console.log('등록된 사용자가 없습니다.')
-                resolve(false)
+                resolve('');
             } else {
-                response.FaceMatches.forEach(data => {
+                response.FaceMatches.forEach((data) => {
                     if (data) {
                         // let position = data.Face.BoundingBox
                         // let similarity = data.Similarity
@@ -172,5 +182,4 @@ const awsRekog = (client, fileName, source) => {
     })
 }
 
-
-module.exports = { uploadFile, uploadFileAsBuffer, removeFile, getList, awsRekog }
+export { uploadFile, uploadFileAsBuffer, removeFile, getList, awsRekog }

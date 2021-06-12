@@ -7,13 +7,14 @@ import { readFileSync } from 'fs'
 import cookies from 'cookie-parser';
 import crypto from 'crypto';
 import { PythonShell } from 'python-shell';
+import AWS from 'aws-sdk';
 const app = express();
 const PORT = 3000;
 const salt = 'whguswo'
 const hash = crypto.createHash('sha1').update(`admin${salt}pass`).digest('base64');
 
 //AWS, DB
-import AWS from 'aws-sdk'
+
 import { uploadFile, uploadFileAsBuffer, removeFile, getList, awsRekog } from './module'
 import { search, writeList, addUser, findHash } from './connectDB';
 import { UserQuery, UserNet } from './type';
@@ -29,15 +30,7 @@ app.use(express.json());
 app.use(express.raw({ limit: '50mb' }));
 app.use(cookies());
 
-AWS.config.update({
-    accessKeyId: process.env.AccessKey,
-    secretAccessKey: process.env.SecretKey,
-    region: 'ap-northeast-2'
-})
 
-const s3 = new AWS.S3({
-    apiVersion: '2006-03-01'
-});
 
 const option = {
     key: readFileSync('./openssl/key.pem'),
@@ -202,7 +195,7 @@ app.post('/adduser', (req, res) => {
     let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
     addUser({ ...param, hash:qrHash })
     console.log(param.type)
-    // uploadFileAsBuffer(req.body, param.name, param.type.replace('image/', ''))
+    uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
     console.log('유저 등록 완료')
     res.end('유저 등록 완료')
 })
@@ -214,7 +207,7 @@ app.post('/search', (req, res) => {
 app.post('/blob', async (req, res) => {
     const client = new AWS.Rekognition();
     let list = await getList(bucket)
-    const source = req.body
+    const source = req.body as Buffer;
 
     let arr = []
     try{
