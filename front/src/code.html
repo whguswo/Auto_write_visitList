@@ -48,7 +48,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script type="text/javascript" src="src/qrcode.js"></script>
+    <!-- <script type="text/javascript" src="../src/qrcode.js"></script> -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
     <style>
         * {
@@ -116,8 +116,10 @@
         }
         #code {
             position: absolute;
+            top: 25px;
             left: 10px;
             margin: 10px;
+            z-index: 2;
         }
         #main {
             position: absolute;
@@ -156,37 +158,37 @@
     </div>
     <div id="main">
         <input id='name' type="text"><input id='phone' type="text"><button id='makeQR'>qrcode 생성</button>
-        <div id="code"></div>
+        <canvas id="code" width="300px" height="300px"></canvas>
     </div>
     <script>
-        const nav = document.querySelector('.navigation')
-        nav.addEventListener('click', (e) => {
-            nav.classList.toggle('active')
-        })
+        // const nav = document.querySelector('.navigation')
+        // nav.addEventListener('click', (e) => {
+        //     nav.classList.toggle('active')
+        // })
 
-        const name = document.querySelector('#name')
-        const phone = document.querySelector('#phone')
-        const button = document.querySelector('#makeQR')
-        const code = document.querySelector('#code')
+        // const name = document.querySelector('#name')
+        // const phone = document.querySelector('#phone')
+        // const button = document.querySelector('#makeQR')
+        // const code = document.querySelector('#code')
         
-        let qrcode = new QRCode(code, {
-	        width : 200,
-	        height : 200
-        });
-        console.log(qrcode)
+        // let qrcode = new QRCode(code, {
+	    //     width : 200,
+	    //     height : 200
+        // });
+        // console.log(qrcode)
 
-        button.addEventListener('click', async(e) => {
-            const result = await fetch('/qrHash', {
-                method: 'POST',
-                body: name.value + phone.value,
-                headers: {
-                    'Content-Type': 'text/plain'
-                }
-            });
-            let data = await result.text();
-            console.log(data)
-            qrcode.makeCode(data)
-        })
+        // button.addEventListener('click', async(e) => {
+        //     const result = await fetch('/qrHash', {
+        //         method: 'POST',
+        //         body: name.value + phone.value,
+        //         headers: {
+        //             'Content-Type': 'text/plain'
+        //         }
+        //     });
+        //     let data = await result.text();
+        //     console.log(data)
+        //     qrcode.makeCode(data)
+        // })
     </script>
 </body>
 </html>

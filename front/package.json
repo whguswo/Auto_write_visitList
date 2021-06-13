@@ -1,0 +1,24 @@
+{
+  "name": "aws-rekognition-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/qrcode": "^1.4.0",
+    "css-loader": "^5.2.6",
+    "html-webpack-plugin": "^5.3.1",
+    "style-loader": "^2.0.0",
+    "ts-loader": "^9.2.3",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2"
+  },
+  "dependencies": {
+    "qrcode": "^1.4.4"
+  }
+}
