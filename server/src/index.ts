@@ -1,7 +1,7 @@
-import express from 'express'
+import express, { Request } from 'express'
 import https from 'https'
 import path from 'path';
-import qrcode from 'qrcode'
+import qrcode from 'qrcode';
 import queryString from 'querystring'
 import { exec } from 'child_process';
 import fs from 'fs/promises';
@@ -20,17 +20,22 @@ const hash = crypto.createHash('sha1').update(`admin${salt}pass`).digest('base64
 import { uploadFile, uploadFileAsBuffer, removeFile, getList, awsRekog } from './module'
 import { search, writeList, addUser, findHash } from './connectDB';
 import { UserQuery, UserNet } from './type';
-import 'dotenv/config'
 const bucket = 'whguswo-bucket'
 const photo_source = 'source.jpg'
 const photo_target = '조현재.jpg'
-
-app.use(express.static('view'));
-app.use(express.static('/'));
 app.use(express.text());
 app.use(express.json());
 app.use(express.raw({ limit: '50mb' }));
 app.use(cookies());
+
+app.use('/front/dist/check', (req, res, next) => {
+    if(req.cookies.id == hash) {
+        next();
+    } else {
+        res.redirect('/front/dist/login.html'); 
+    }
+})
+app.use('/front', express.static(path.resolve(__dirname, '..', '..', 'front')));
 
 const option = {
     key: readFileSync('./openssl/key.pem'),
@@ -61,14 +66,10 @@ const option = {
 // getList(bucket) 목록
 
 app.get('/', (req, res) => {
-    res.sendFile('index.html', {
-        root: '../front/src'
-    })
+    res.redirect('/front/dist/index.html')
 })
 app.get('/visit', (req, res) => {
-    res.sendFile('visit.html', {
-        root: '../front/src'
-    })
+    res.redirect('/front/dist/visit.html')
 })
 
 // app.get('/list', async(req, res) => {
@@ -173,19 +174,11 @@ app.get('/noUpload', async (req, res) => {
     // });
 })
 
-app.get('/admin', (req, res) => {  
-    if(req.cookies.id == hash) {
-        res.sendFile('admin.html', {
-            root: '../front/src'
-        })
-    } else {
-        res.redirect('/login')
-    }
+app.get('/admin', (req, res) => {
+    res.redirect('/front/dist/check/admin.html');  
 })
 app.get('/adduser', (req, res) => {
-    res.sendFile('addUser.html', {
-        root: '../front/src'
-    })
+    res.redirect('/front/dist/addUser.html');
 })
 
 // 유저등록 구현할 부분
@@ -237,11 +230,9 @@ app.get('/test', (req, res) => {
 })
 app.get('/login', (req, res) => {
     if(req.cookies.id == hash) {
-        res.redirect('/admin')
+        res.redirect('/front/dist/check/admin.html')
     } else {
-        res.sendFile('login.html', {
-            root: '../front/src'
-        })
+        res.redirect('/front/dist/login.html')
     }
 })
 app.post('/login', (req, res) => {

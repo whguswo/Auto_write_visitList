@@ -1,12 +1,17 @@
 import fs from 'fs';
 import { resolve } from 'path';
 import AWS from 'aws-sdk';
+import * as dotenv from 'dotenv';
+import path from 'path';
 import { Request, Response } from 'express';
 const bucket = 'whguswo-bucket';
 const photo_source = 'source.jpg'
+const pathing = path.resolve(__dirname, '..', 'src', '.env');
+dotenv.config({ path:pathing })
+
 AWS.config.update({
-    accessKeyId: process.env.AccessKey,
-    secretAccessKey: process.env.SecretKey,
+    accessKeyId: process.env.AK,
+    secretAccessKey: process.env.SK,
     region: 'ap-northeast-2'
 })
 
@@ -30,9 +35,9 @@ const uploadFile = (fileName:string) => {
 
     return new Promise((res, rej) => {
         s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
-            // console.log(`File uploaded successfully. ${data.Location}`);
             if (err) rej(err)
-            console.log(`File uploaded successfully. ${data.Location}`)
+            console.log(data)
+            // console.log(`File uploaded successfully. ${data.Location}`)
             res('uploaded')
         });
     })
@@ -45,6 +50,7 @@ const uploadFileAsBuffer = (buf:Buffer, name:string, type:string) => {
         Key: `${name}.${type}`,
         Body: buf,
     };
+    console.log(buf)
 
     // s3.upload(params, (err, data) => {
     //     console.log(`File uploaded successfully. ${data.Location}`);
@@ -54,7 +60,6 @@ const uploadFileAsBuffer = (buf:Buffer, name:string, type:string) => {
         s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
             // console.log(`File uploaded successfully. ${data.Location}`);
             if (err) rej(err)
-            console.log(`File uploaded successfully. ${data.Location}`)
             res('uploaded')
         });
     })
