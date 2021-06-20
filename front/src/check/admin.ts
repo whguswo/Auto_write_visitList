@@ -1,4 +1,6 @@
-import { init } from './nav';
+import { init } from '../nav';
+import "../nav.css";
+import "./admin.css";
 init();
 
 const pageButton = document.querySelectorAll<HTMLButtonElement>('.pageButton')
@@ -16,6 +18,13 @@ const endTime = document.querySelector<HTMLInputElement>('#endTime');
 const tbody = document.querySelector<HTMLTableElement>('tbody')
 const pageNum = document.querySelector<HTMLDivElement>('#pageNum')
 let arr = [];
+
+startTime.addEventListener('input', () => {
+    search(0)
+})
+endTime.addEventListener('input', () => {
+    search(0)
+})
 
 const search = async(pageEdit:number) => {
     if(startTime.value != '' && endTime.value != '') {

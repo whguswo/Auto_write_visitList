@@ -3,10 +3,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {  //ts -> js 로 바꿔 인식
     entry: {    //시작하는 부분
-        // index: './src/index.ts',
         addUser: './src/addUser.ts',
-        admin: './src/admin.ts',
-        code: './src/code.ts'
+        'check/admin': './src/check/admin.ts',
+        code: './src/code.ts',
+        nav: './src/nav.ts',
+        login:'./src/login.ts',
+        visit:'./src/visit.ts',
+        scan: './src/scan.ts',
     },
     devtool: 'inline-source-map',
     mode:'development',
@@ -19,6 +22,9 @@ module.exports = {  //ts -> js 로 바꿔 인식
             }, {
                 test:/\.css$/,
                 use: ["style-loader", "css-loader"]
+            }, {
+                test: /\.(png|jpe?g|gif)$/i,
+                loader: 'file-loader'
             }
         ],
     },
@@ -45,49 +51,59 @@ module.exports = {  //ts -> js 로 바꿔 인식
         new HtmlWebpackPlugin({
             template: './src/index.html',
             filename:'./index.html',
-            chunks:['src/nav.ts', 'src/nav.css']
+            chunks:['nav']
         }),
         new HtmlWebpackPlugin({
             template: './src/addUser.html',
             filename:'./addUser.html',
-            chunks:['addUser', 'src/nav.css']
+            chunks:['addUser']
         }),
         new HtmlWebpackPlugin({
-            template: './src/admin.html',
-            filename:'./admin.html',
-            chunks:['src/admin.ts', 'src/nav.ts', 'src/nav.css']
+            template: './src/check/admin.html',
+            filename:'./check/admin.html',
+            chunks:['check/admin']
         }),
         new HtmlWebpackPlugin({
             template: './src/code.html',
             filename:'./code.html',
-            chunks:['src/code.ts', 'src/nav.ts', 'src/nav.css']
+            chunks:['code']
         }),
         new HtmlWebpackPlugin({
             template: './src/login.html',
             filename:'./login.html',
-            chunks:['src/login.ts', 'src/nav.ts', 'src/nav.css']
+            chunks:['login']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/visit.html',
+            filename:'./visit.html',
+            chunks:['visit']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/scan.html',
+            filename:'./scan.html',
+            chunks:['scan']
         }),
     ],
-    devServer:{
-        contentBase:`${__dirname}/dist`,
-        inline:true,
-        hot:true,
-        proxy: {
-            '/api': {
-                target: 'http://127.0.0.1:4000',
-                changeOrigin: true,
-                secure: false
-            },
-            '/socket.io' : {
-                target: 'http://127.0.0.1:4000',
-                ws: true,
-                changeOrigin: true,
-                secure: false
-            }
-        },
-        host: '127.0.0.1',
-        port: 4500
-    },
+    // devServer:{
+    //     contentBase:`${__dirname}/dist`,
+    //     inline:true,
+    //     hot:true,
+    //     proxy: {
+    //         '/api': {
+    //             target: 'http://127.0.0.1:4000',
+    //             changeOrigin: true,
+    //             secure: false
+    //         },
+    //         '/socket.io' : {
+    //             target: 'http://127.0.0.1:4000',
+    //             ws: true,
+    //             changeOrigin: true,
+    //             secure: false
+    //         }
+    //     },
+    //     host: '127.0.0.1',
+    //     port: 4500
+    // },
     cache: {
         type: 'filesystem',
         cacheDirectory: path.resolve(__dirname, '.webpack_cache')

@@ -1,4 +1,7 @@
 import QRCode from 'qrcode';
+import { init } from './nav';
+import "./nav.css";
+init();
 
 const qrName = document.querySelector<HTMLInputElement>('#name')
 const phoneNum = document.querySelector<HTMLInputElement>('#phone')

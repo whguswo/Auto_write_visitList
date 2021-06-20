@@ -35,7 +35,7 @@ app.use('/front/dist/check', (req, res, next) => {
         res.redirect('/front/dist/login.html'); 
     }
 })
-app.use('/front', express.static(path.resolve(__dirname, '..', '..', 'front')));
+app.use('/front', express.static(path.resolve(__dirname, '../../front')));
 
 const option = {
     key: readFileSync('./openssl/key.pem'),
@@ -182,13 +182,13 @@ app.get('/adduser', (req, res) => {
 })
 
 // 유저등록 구현할 부분
-app.post('/adduser', (req, res) => {
+app.post('/adduser', async (req, res) => {
     let param = req.query as unknown as UserNet;
     //차례로 이름, 주소, 전화번호
     let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
-    addUser({ ...param, hash:qrHash })
+    await addUser({ ...param, hash:qrHash })
     console.log(param.type)
-    uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
+    await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
     console.log('유저 등록 완료')
     res.end('유저 등록 완료')
 })
@@ -246,15 +246,14 @@ app.post('/login', (req, res) => {
 })
 
 app.get('/code', (req, res) => {
-    res.sendFile('code.html', {
-        root: '../front/src'
-    })
+    res.redirect('/front/dist/code.html')
 })
 app.post('/qrHash', (req, res) => {
     res.end(crypto.createHash('sha256').update(req.body).digest('base64'))
 })
 app.post('/qrCompare', (req, res) => {
-    findHash(req.body, res)
+    findHash(req.body.result[0], req.body.result[1], res)
+    // writeList(req.body.visit[0], req.body.visit[1])
 })
 
 app.get('/scan', (req, res) => {

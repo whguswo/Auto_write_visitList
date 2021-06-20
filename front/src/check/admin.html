@@ -4,20 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>방명록 열람</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
-    <style>
-        #code {
-            position: absolute;
-            top: 115px;
-            left: 10px;
-            margin: 10px;
-        }
-        #main {
-            position: absolute;
-            left: 60px;
-        }
-    </style>
 </head>
 <body>
     <div class="navigation">
@@ -40,7 +28,7 @@
                     <span class="title">방명록 확인</span>
                 </a>
             </li>
-            <li id="qrcode">
+            <li id="code">
                 <a href="/code">
                     <span class="icon"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
                     <span class="title">QRcode</span>
@@ -48,12 +36,32 @@
             </li>
         </ul>
     </div>
-    <div id="main">
-        이름 : <input id='name' type="text"><br>
-        전화번호 : <input id='phone' type="text"><br>
-        <button id='makeQR'>qrcode 생성</button><br><br>
-        <a href="/addUser">회원가입 하러가기</a>
-        <canvas id="code" width="300px" height="300px"></canvas>
+
+    <div id='con'>
+        <h1 style="margin: 0;">Welcome to Admin Page!</h1><br>
+        <div id='inputD'>
+            <input type="date" id="startTime">
+            <input type="date" id="endTime">
+        </div><br>
+        <table id='main'>
+            <colgroup>
+                <col width="30%">
+                <col width="40%">
+                <col width="30%">
+            </colgroup>
+            <thead>
+                <td>이름</td>
+                <td>날짜</td>
+                <td>온도</td>
+            </thead>
+            <tbody>
+            </tbody>
+        </table><br>
+        <div id='page'>
+            <button class='pageButton'><</button>
+            <div id='pageNum'>0</div>
+            <button class='pageButton'>></button>
+        </div>
     </div>
 </body>
 </html>

@@ -1,0 +1,36 @@
+table {
+    width: 100%;
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    border: 1px solid black;
+}
+#con {
+    position: absolute;
+    left: 60px;
+    height: 100%;
+}
+input {
+    width: 45%;
+}
+#page {
+    width: 110px;
+    margin: 0 auto;
+}
+.pageButton {
+    border: 1px solid black;
+    width: 40px;
+    height: 40px;
+    font-size: 25px;
+    background-color: white;
+}
+.pageButton:hover {
+    background-color: lightgray;
+}
+#pageNum {
+    display: inline;
+    font-size: 25px;
+}

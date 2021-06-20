@@ -1,4 +1,5 @@
 import { init } from './nav';
+import "./nav.css";
 init();
 
 const rekoServer = '/blob'

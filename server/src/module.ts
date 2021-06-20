@@ -32,8 +32,12 @@ const uploadFile = (fileName:string) => {
     // s3.upload(params, (err, data) => {
     //     console.log(`File uploaded successfully. ${data.Location}`);
     // });
-
+    // return s3.upload(params).promise().then((data)=>{
+    //     console.log(data)
+    //     return 'uploaded'
+    // })
     return new Promise((res, rej) => {
+        
         s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
             if (err) rej(err)
             console.log(data)

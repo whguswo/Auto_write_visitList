@@ -56,16 +56,17 @@ const writeList = (name:string, date:string) => {
 };
 
 const addUser = (obj:UserQuery) => {
-    dbMap.get('user-list').insertOne(obj);
+    return dbMap.get('user-list').insertOne(obj);
 };
 
-const findHash = async(hash:string, res:Response) => {
-    const arr = await dbMap.get('user-list').find({ "qrHash": hash}).toArray();
+const findHash = async(hash:string, time:string, res:Response) => {
+    const arr = await dbMap.get('user-list').find({ "hash": hash}).toArray();
     if(arr.length == 0) {
         console.log('등록되지않은 사용자입니다.')
         res.end('noUser')
     } else {
-        res.end(arr[0].name)
+        writeList(arr[0].name, time)
+        res.end('complete')
     }
     
     // console.log(` == Find ${hash} ==`)

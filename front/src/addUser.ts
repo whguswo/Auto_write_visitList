@@ -1,5 +1,8 @@
 import { init } from './nav';
+import "./nav.css";
+import "./addUser.css";
 init();
+
 
 const photo = document.querySelector<HTMLDivElement>('#photo')
 const fileInput = document.querySelector<HTMLInputElement>('#fileInput')

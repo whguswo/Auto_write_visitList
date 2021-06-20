@@ -1,4 +1,5 @@
 import { init } from './nav';
+import "./nav.css";
 init();
 
 const loginButton = document.querySelector<HTMLButtonElement>('#submit')
@@ -19,7 +20,7 @@ loginButton.addEventListener('click', async(e) => {
     let data = await result.text();
     if(data == 'admin') {
         alert(`환영합니다. Admin님`)
-        location.href = '/admin'
+        location.href = '/front/dist/check/admin.html'
     } else {
         alert('Access denied.')
     }
