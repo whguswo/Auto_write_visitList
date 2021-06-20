@@ -248,6 +248,9 @@ app.post('/login', (req, res) => {
 app.get('/code', (req, res) => {
     res.redirect('/front/dist/code.html')
 })
+app.get('/scan', (req, res) => {
+    res.redirect('/front/dist/scan.html')
+})
 app.post('/qrHash', (req, res) => {
     res.end(crypto.createHash('sha256').update(req.body).digest('base64'))
 })
