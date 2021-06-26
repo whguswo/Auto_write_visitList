@@ -46,8 +46,8 @@ const search = async (query:Query, res:Response) => {
     console.log(arr)
 };
 
-const writeList = (name:string, date:string) => {
-    dbMap.get('visit-list').insertOne({
+const writeList = async(name:string, date:string) => {
+    await dbMap.get('visit-list').insertOne({
         "name": name,
         "date": new Date(date),
         "temp": 36.5,

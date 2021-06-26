@@ -4,29 +4,74 @@
     <meta charset="UTF-8">
     <title>QR Scanner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <style>
+        hr {
+            margin-top: 32px;
+        }
+        input[type="file"] {
+            display: block;
+            margin-bottom: 16px;
+        }
+        #flash-toggle {
+            display: none;
+        }
+        video {
+            display: block;
+            height: 460px;
+        }
+        #main {
+            position: absolute;
+            left: 60px;
+            height: 100%;
+        }
+    </style>
 </head>
-<body>
-<style>
-    hr {
-        margin-top: 32px;
-    }
-    input[type="file"] {
-        display: block;
-        margin-bottom: 16px;
-    }
-    div {
-        margin-bottom: 16px;
-    }
-    #flash-toggle {
-        display: none;
-    }
-</style>
-<h1>Scan from WebCam:</h1>
-<div>
+<!-- <body>
+<div id='main'>
     <video id="qrVideo"></video>
     <br>
     <br>Detected QR code: </br>
     <span id="cam-qr-result">None</span>
 </div>
+</body> -->
+<body>
+    <div class="navigation">
+        <ul>
+            <li id="visit">
+                <a href="/visit">
+                    <span class="icon"><i class="fa fa-thermometer-full" aria-hidden="true"></i></span>
+                    <span class="title">온도측정</span>
+                </a>
+            </li>
+            <li id="addUser">
+                <a href="/addUser">
+                    <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
+                    <span class="title">사용자 등록</span>
+                </a>
+            </li>
+            <li id="admin">
+                <a href="/login">
+                    <span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
+                    <span class="title">방명록 확인</span>
+                </a>
+            </li>
+            <li id="code">
+                <a href="/code">
+                    <span class="icon"><i class="fa fa-qrcode" aria-hidden="true"></i></span>
+                    <span class="title">QRcode</span>
+                </a>
+            </li>
+            <li id="scan">
+                <a href="/scan">
+                    <span class="icon"><i class="fa fa-address-card-o" aria-hidden="true"></i></span>
+                    <span class="title">QR 스캔</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div id='main'>
+        <video id="qrVideo"></video>
+    </div>
 </body>
 </html>

@@ -19,6 +19,7 @@ button.addEventListener('click', async(e) => {
     let data = await result.text();
     console.log(data)
     QRCode.toCanvas(code, data, () => {
-        console.log('success!')
+        code.style.width = '200px'
+        code.style.height = '200px'
     })
 })

@@ -1,14 +1,16 @@
+import { init } from './nav';
+import "./nav.css";
+init();
+
 import QrScanner from 'qr-scanner';
 // import QrScannerWorkerPath from '!!file-loader!./../qr-scanner';
 // console.log(QrScannerWorkerPath)
 // QrScanner.WORKER_PATH = QrScannerWorkerPath;
 
 const qrVideo = document.querySelector<HTMLVideoElement>('#qrVideo')
-const camQrResult = document.querySelector<HTMLSpanElement>('#cam-qr-result');
 
-const setResult = async(label:Element, result:string) => {
+const setResult = async(result:string) => {
     scanner.stop()
-    label.textContent = result;
     let hash = result
     let date = new Date()
     
@@ -30,9 +32,6 @@ const setResult = async(label:Element, result:string) => {
     }
 }
 
-const scanner = new QrScanner(qrVideo, result => setResult(camQrResult, result), error => {
-    camQrResult.textContent = error;
-    camQrResult.style.color = 'inherit';
-}, 300, "user");
+const scanner = new QrScanner(qrVideo, result => setResult(result), error => {}, 300, "user");
 
 scanner.start()
