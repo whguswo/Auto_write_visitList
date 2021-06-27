@@ -17,6 +17,8 @@ window.addEventListener('load', async (e) => {
 })
 
 visitButton.addEventListener('click', (e) => {
+    visitButton.disabled = true;
+    visitButton.style.backgroundColor = 'gray'
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -63,6 +65,9 @@ visitButton.addEventListener('click', (e) => {
                 }
 
             }
+            visitButton.disabled = false;
+            visitButton.style.backgroundColor = 'lightgreen';
         }
     })
+    
 })

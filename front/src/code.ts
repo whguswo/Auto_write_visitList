@@ -1,6 +1,7 @@
 import QRCode from 'qrcode';
 import { init } from './nav';
 import "./nav.css";
+import "./code.css";
 init();
 
 const qrName = document.querySelector<HTMLInputElement>('#name')
@@ -9,17 +10,21 @@ const button = document.querySelector<HTMLButtonElement>('#makeQR')
 const code = document.querySelector<HTMLCanvasElement>('#code')
 
 button.addEventListener('click', async(e) => {
-    const result = await fetch('/qrHash', {
-        method: 'POST',
-        body: qrName.value + phoneNum.value,
-        headers: {
-            'Content-Type': 'text/plain'
-        }
-    });
-    let data = await result.text();
-    console.log(data)
-    QRCode.toCanvas(code, data, () => {
-        code.style.width = '200px'
-        code.style.height = '200px'
-    })
+    if(qrName.value != '' && phoneNum.value != '') {
+        const result = await fetch('/qrHash', {
+            method: 'POST',
+            body: qrName.value + phoneNum.value,
+            headers: {
+                'Content-Type': 'text/plain'
+            }
+        });
+        let data = await result.text();
+        console.log(data)
+        QRCode.toCanvas(code, data, () => {
+            code.style.width = '200px'
+            code.style.height = '200px'
+        })
+    } else {
+        alert('정보를 모두 입력해주세요!')
+    }
 })

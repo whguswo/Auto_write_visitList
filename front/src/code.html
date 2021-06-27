@@ -6,18 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
-    <style>
-        #code {
-            position: absolute;
-            top: 115px;
-            left: 10px;
-            margin: 10px;
-        }
-        #main {
-            position: absolute;
-            left: 60px;
-        }
-    </style>
 </head>
 <body>
     <div class="navigation">
@@ -54,12 +42,13 @@
             </li>
         </ul>
     </div>
+    <canvas id="code" width="160" height="160"></canvas>
     <div id="main">
-        이름 : <input id='name' type="text"><br>
-        전화번호 : <input id='phone' type="text"><br>
+        <input id='name' type="text" placeholder="Name"><br>
+        <input id='phone' type="text" placeholder="Phone"><br>
         <button id='makeQR'>qrcode 생성</button><br><br>
+        <span>회원가입을 아직 하지 않으셨다면?</span><br>
         <a href="/addUser">회원가입 하러가기</a>
-        <canvas id="code" width="160" height="160"></canvas>
     </div>
 </body>
 </html>

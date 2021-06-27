@@ -6,16 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
     <style>
-        hr {
-            margin-top: 32px;
-        }
-        input[type="file"] {
-            display: block;
-            margin-bottom: 16px;
-        }
-        #flash-toggle {
-            display: none;
-        }
         video {
             display: block;
             height: 460px;
@@ -25,16 +15,18 @@
             left: 60px;
             height: 100%;
         }
+        #turn {
+            position: absolute;
+            bottom: 0;
+            background-color: limegreen;
+            text-align: center;
+            width: 100%;
+            height: 10%;
+            border: 0px;
+
+        }
     </style>
 </head>
-<!-- <body>
-<div id='main'>
-    <video id="qrVideo"></video>
-    <br>
-    <br>Detected QR code: </br>
-    <span id="cam-qr-result">None</span>
-</div>
-</body> -->
 <body>
     <div class="navigation">
         <ul>
@@ -72,6 +64,7 @@
     </div>
     <div id='main'>
         <video id="qrVideo"></video>
+        <button id='turn'>카메라 전환</button>
     </div>
 </body>
 </html>

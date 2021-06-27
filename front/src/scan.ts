@@ -8,11 +8,15 @@ import QrScanner from 'qr-scanner';
 // QrScanner.WORKER_PATH = QrScannerWorkerPath;
 
 const qrVideo = document.querySelector<HTMLVideoElement>('#qrVideo')
+const turn = document.querySelector<HTMLButtonElement>('#turn')
+const camera = (location.search.match(/camera=(\w+)/)?.[1] ?? 'user') as 'user'|'environment';
+
+turn.addEventListener('click', () => location.search = `?camera=${camera === 'user' ? 'environment' : 'user'}`);
 
 const setResult = async(result:string) => {
     scanner.stop()
-    let hash = result
-    let date = new Date()
+    const hash = result
+    const date = new Date()
     
     const compareRes = await fetch('/qrcompare', {
         method: 'POST',
@@ -30,8 +34,9 @@ const setResult = async(result:string) => {
     } else {
         alert('방명록이 작성되었습니다.')
     }
+    window.location.reload()
 }
 
-const scanner = new QrScanner(qrVideo, result => setResult(result), error => {}, 300, "user");
+const scanner = new QrScanner(qrVideo, result => setResult(result), error => {}, 300, camera);
 
 scanner.start()

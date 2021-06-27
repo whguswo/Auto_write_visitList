@@ -195,32 +195,35 @@ app.post('/adduser', async (req, res) => {
 
 app.post('/search', (req, res) => {
     search(req.body, res)
+    res.end('검색완료')
 })
 
 app.post('/blob', async (req, res) => {
     const client = new AWS.Rekognition();
-    let list = await getList(bucket)
+    const list = await getList(bucket)
     const source = req.body as Buffer;
 
-    let arr = []
+    const arr = []
     try{
         for await (let fileName of list) {
             const result = await awsRekog(client, fileName, source)
             if (result) {
                 arr.push(result)
-                res.json(arr)
             }
         }
-        if(!arr[0]) {
+        if(arr.length) {
+            res.json(arr);
+        } else {
             res.json(['noIden'])
         }
     } catch {
-        res.json(['noPerson'])
+        res.json(['noPerson']);
     }
     
 })
 app.post('/writeList', async (req, res) => {
     writeList(req.body.visit[0], req.body.visit[1])
+    res.end('방명록 작성완료')
 })
 
 app.get('/test', (req, res) => {

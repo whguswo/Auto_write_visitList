@@ -1,0 +1,35 @@
+#code {
+    position: absolute;
+    left: 70px;
+    margin: 10px;
+    font-size: 25px;
+}
+#main {
+    position: absolute;
+    bottom: 30px;
+    left: 60px;
+}
+#main > * {
+    margin-left: 10px;
+    margin-bottom: 3px;
+}
+input {
+    width: 230px;
+    height: 55px;
+    font-size: 25px;
+    text-align: center;
+    border-radius: 10px;
+}
+input::placeholder {
+    font-size: 25px;
+    text-align: center;
+}
+
+#makeQR{
+    color: white;
+    border: 0px;
+    background-color: rgb(228, 140, 221);
+    border-radius: 10px;
+    width: 230px;
+    height: 55px;
+}

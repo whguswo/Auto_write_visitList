@@ -42,8 +42,8 @@ const search = async (query:Query, res:Response) => {
     query.date['$lte'] = new Date(query.date['$lte']);
     const arr = await dbMap.get('visit-list').find(query).toArray();
     res.json(arr);
-    console.log(` == Find ${query.date['$gte']} ~ ${query.date['$lte']}`)
-    console.log(arr)
+    // console.log(` == Find ${query.date['$gte']} ~ ${query.date['$lte']}`)
+    // console.log(arr)
 };
 
 const writeList = async(name:string, date:string) => {
