@@ -2,7 +2,7 @@
     position: absolute;
     left: 70px;
     margin: 10px;
-    font-size: 25px;
+    font-size: 18px;
 }
 #main {
     position: absolute;
@@ -16,12 +16,12 @@
 input {
     width: 230px;
     height: 55px;
-    font-size: 25px;
+    font-size: 18px;
     text-align: center;
     border-radius: 10px;
 }
 input::placeholder {
-    font-size: 25px;
+    font-size: 18px;
     text-align: center;
 }
 

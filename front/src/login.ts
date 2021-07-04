@@ -1,5 +1,6 @@
 import { init } from './nav';
 import "./nav.css";
+import "./login.css";
 init();
 
 const loginButton = document.querySelector<HTMLButtonElement>('#submit')

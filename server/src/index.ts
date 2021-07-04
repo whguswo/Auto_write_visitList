@@ -8,12 +8,15 @@ import fs from 'fs/promises';
 import { readFileSync } from 'fs'
 import cookies from 'cookie-parser';
 import crypto from 'crypto';
-import { PythonShell } from 'python-shell';
+import { PythonShell, Options } from 'python-shell';
 import AWS from 'aws-sdk';
 const app = express();
 const PORT = 3000;
 const salt = 'whguswo'
 const hash = crypto.createHash('sha1').update(`admin${salt}pass`).digest('base64');
+// const tempOption:Options = {
+//     mode: "json",
+// }
 
 //AWS, DB
 
@@ -45,16 +48,14 @@ const option = {
 };
 
 //온도부분!!! 테스트중
-// let tempOption = {
-//     mode: 'json',
-// }
-// PythonShell.run('temperature.py', tempOption, (err, result) => {
-//     // console.log(`result : ${result[0]}`)
 
-//     let arr = result[0].result
-//     for(let i of arr) {
+
+// PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
+//     const arr = result[0].result;
+//     console.log(arr)
+//     for(let i of arr) { 
 //         for(let j of i) {
-//             if(j > 40) {
+//             if(j > 40) {  
 //                 console.log('비정상!')
 //             }
 //         }
@@ -70,108 +71,6 @@ app.get('/', (req, res) => {
 })
 app.get('/visit', (req, res) => {
     res.redirect('/front/dist/visit.html')
-})
-
-// app.get('/list', async(req, res) => {
-// exec(`fswebcam -r 1280x720 --no-banner source.jpg`, async(err, stdout, stderr) => {
-//     const client = new AWS.Rekognition();
-//     let list = await getList(bucket)
-//     await uploadFile('source.jpg')
-
-//     let arr = []
-//     for await (let fileName of list) {
-//         const result = await awsRekog(client, fileName)
-//         if(result) {
-//             arr.push(result)
-//             console.log(arr)
-//         }
-//     }
-
-//     await removeFile('source.jpg')
-// })
-
-// })
-// // app.get('/compare', async (req, res) => {
-//     exec(`fswebcam -r 1280x720 --no-banner source.jpg`, async(err, stdout, stderr) => {
-//         const client = new AWS.Rekognition();
-// const params = {
-//     SourceImage: {
-//         S3Object: {
-//             Bucket: bucket,
-//             Name: photo_source
-//         },
-//     },
-//     TargetImage: {
-//         S3Object: {
-//             Bucket: bucket,
-//             Name: photo_target
-//         },
-//     },
-//     SimilarityThreshold: 80
-// };
-
-//         const data = await uploadFile('source.jpg')
-//         client.compareFaces(params, async (err, response) => {
-//             if(!response) {
-//                 res.end('사람이 없습니다.')
-//                 await removeFile('source.jpg')
-//                 return true
-//             } else if(response.FaceMatches.length === 0) {
-//                 res.end('등록된 사용자가 없습니다.')
-//             }
-//             response.FaceMatches.forEach(data => {
-//                 if (data) {
-//                     let position = data.Face.BoundingBox
-//                     let similarity = data.Similarity
-//                     // console.log(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-//                     console.log('인식 완료!')
-//                     res.end(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-//                 }
-//             })
-//             await removeFile('source.jpg')
-//         });
-//     });
-// })
-
-app.get('/noUpload', async (req, res) => {
-    exec(`fswebcam -r 1280x720 --no-banner source.jpg`, async (err, stdout, stderr) => {
-        const client = new AWS.Rekognition();
-        let list = await getList(bucket)
-        const source = await fs.readFile('./source.jpg');
-
-        let arr = []
-        for await (let fileName of list) {
-            const result = await awsRekog(client, fileName, source)
-            if (result) {
-                arr.push(result)
-                console.log(arr)
-            }
-        }
-    })
-
-    // const source = await fs.readFile('./source.jpg');
-    // const params = {
-    //     SourceImage: {
-    //       Bytes: source
-    //     },
-    //     TargetImage: {
-    //         S3Object: {
-    //             Bucket: bucket,
-    //             Name: '조현재.jpg'
-    //         },
-    //     },
-    //     SimilarityThreshold: 80
-    // };
-    // client.compareFaces(params, async (err, response) => {
-    //     response.FaceMatches.forEach(data => {
-    //         if (data) {
-    //             let position = data.Face.BoundingBox
-    //             let similarity = data.Similarity
-    //             // console.log(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-    //             res.end(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-    //         }
-    //     })
-    // });
 })
 
 app.get('/admin', (req, res) => {
@@ -195,7 +94,6 @@ app.post('/adduser', async (req, res) => {
 
 app.post('/search', (req, res) => {
     search(req.body, res)
-    res.end('검색완료')
 })
 
 app.post('/blob', async (req, res) => {

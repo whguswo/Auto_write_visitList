@@ -1,3 +1,6 @@
+body {
+    width: 100%;
+}
 table {
     width: 100%;
     border: 1px solid black;
@@ -9,8 +12,10 @@ td {
     border: 1px solid black;
 }
 #con {
-    position: absolute;
-    left: 60px;
+    width: calc(100% - 65px);
+    /* position: absolute;
+    left: 60px; */
+    margin-left: 65px;
     height: 100%;
 }
 input {

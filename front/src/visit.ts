@@ -35,11 +35,11 @@ visitButton.addEventListener('click', (e) => {
         let data = await result.json();
         console.log(data)
 
-        if(data[0] == 'noPerson') {
+        if (data[0] == 'noPerson') {
             alert('사람이 없습니다.')
-        } else if(data[0] == 'noIden') {
+        } else if (data[0] == 'noIden') {
             let isNew = confirm('처음보는 사용자 입니다. 사용자를 등록하시겠습니까?')
-            if(isNew) {
+            if (isNew) {
                 location.href = '/addUser'
             }
         } else {
@@ -57,7 +57,7 @@ visitButton.addEventListener('click', (e) => {
                 });
             } else {
                 let reconfirm = confirm('사용자 등록을 하셨나요?')
-                if(reconfirm) {
+                if (reconfirm) {
                     alert('다시 측정해주세요.')
                     window.location.reload()
                 } else {
@@ -65,9 +65,10 @@ visitButton.addEventListener('click', (e) => {
                 }
 
             }
-            visitButton.disabled = false;
-            visitButton.style.backgroundColor = 'lightgreen';
+
         }
+        visitButton.disabled = false;
+        visitButton.style.backgroundColor = 'lightgreen';
     })
-    
+
 })
