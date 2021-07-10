@@ -38,8 +38,30 @@ const dbMap = new Map<string, Collection<any>>();
 // })
 
 const search = async (query:Query, res:Response) => {
-    query.date['$gte'] = new Date(query.date['$gte']);
-    query.date['$lte'] = new Date(query.date['$lte']);
+    if(query.date['$gte'] != '') {
+        query.date['$gte'] = new Date(query.date['$gte']);
+    } else {
+        delete query.date['$gte']
+    }
+    if(query.date['$lte'] != '') {
+        query.date['$lte'] = new Date(query.date['$lte']);
+    } else {
+        if(query.date['$gte']) {
+            delete query.date['$lte']
+        } else {
+            delete query.date
+        }
+    }
+    if(query.name == '') {
+        delete query.name
+    }
+    if(query.temp != '') {
+        query.temp = Number(query.temp)
+    } else {
+        delete query.temp
+    }
+    
+    
     const arr = await dbMap.get('visit-list').find(query).toArray();
     if(arr.length == 0) {
         console.log('검색결과 없음')

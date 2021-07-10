@@ -2,7 +2,9 @@ export interface Query{
     date:{
         '$gte':string|Date;
         '$lte':string|Date;
-    }
+    },
+    name:string;
+    temp:string|number;
 };
 
 export interface UserNet{
@@ -13,5 +15,5 @@ export interface UserNet{
 };
 
 export interface UserQuery extends UserNet{
-    hash:string
+    hash:string;
 };

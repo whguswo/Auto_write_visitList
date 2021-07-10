@@ -2,15 +2,23 @@ body {
     width: 100%;
 }
 table {
-    width: 100%;
+    width: 97%;
     border: 1px solid black;
     border-collapse: collapse;
 }
-
-th,
-td {
+thead {
     border: 1px solid black;
 }
+
+/* td {
+    font-size: 13px;
+}  */
+
+/* th,
+td {
+    border: 1px solid black;
+} */
+
 #con {
     width: calc(100% - 65px);
     /* position: absolute;
@@ -19,7 +27,8 @@ td {
     height: 100%;
 }
 input {
-    width: 45%;
+    width: 40%;
+    margin: 3px;
 }
 #page {
     width: 110px;
@@ -38,4 +47,12 @@ input {
 #pageNum {
     display: inline;
     font-size: 25px;
+}
+#searchBtn {
+    background-color: rgb(95, 95, 236);
+    color: white;
+    margin: 3px;
+    width: 100px;
+    height: 20px;
+    border: 0px
 }
