@@ -65,8 +65,10 @@ const search = async (query:Query, res:Response) => {
     const arr = await dbMap.get('visit-list').find(query).toArray();
     if(arr.length == 0) {
         console.log('검색결과 없음')
+        res.send('noResult')
+    } else {
+        res.json(arr);
     }
-    res.json(arr);
 };
 
 const writeList = async(name:string, date:string) => {

@@ -1,29 +1,17 @@
 body {
     width: 100%;
 }
-table {
-    width: 97%;
+/* table {
     border: 1px solid black;
     border-collapse: collapse;
 }
 thead {
     border: 1px solid black;
-}
-
-/* td {
-    font-size: 13px;
-}  */
-
-/* th,
-td {
-    border: 1px solid black;
 } */
 
 #con {
-    width: calc(100% - 65px);
-    /* position: absolute;
-    left: 60px; */
-    margin-left: 65px;
+    width: 100%;
+    margin-left: 5px;
     height: 100%;
 }
 input {
@@ -48,11 +36,7 @@ input {
     display: inline;
     font-size: 25px;
 }
-#searchBtn {
-    background-color: rgb(95, 95, 236);
-    color: white;
+.btn {
     margin: 3px;
-    width: 100px;
-    height: 20px;
-    border: 0px
+    width: 40%;
 }

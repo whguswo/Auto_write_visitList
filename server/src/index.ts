@@ -32,6 +32,7 @@ app.use(express.raw({ limit: '50mb' }));
 app.use(cookies());
 
 app.use('/front/dist/check', (req, res, next) => {
+    console.log(req.cookies);
     if(req.cookies.id == hash) {
         next();
     } else {
@@ -74,7 +75,7 @@ app.get('/visit', (req, res) => {
 })
 
 app.get('/admin', (req, res) => {
-    res.redirect('/front/dist/check/admin.html');  
+    res.redirect('/front/dist/check/admin.html');
 })
 app.get('/adduser', (req, res) => {
     res.redirect('/front/dist/addUser.html');
@@ -130,15 +131,16 @@ app.get('/test', (req, res) => {
     })
 })
 app.get('/login', (req, res) => {
-    if(req.cookies.id == hash) {
-        res.redirect('/front/dist/check/admin.html')
-    } else {
-        res.redirect('/front/dist/login.html')
-    }
+    // if(req.cookies.id == hash) {
+    //     res.redirect('/front/dist/check/admin.html')
+    // } else {
+    //     res.redirect('/front/dist/login.html')
+    // }
+    res.redirect('/front/dist/login.html')
 })
 app.post('/login', (req, res) => {
     if(req.body.id == 'admin' && req.body.pass == 'pass') {
-        res.cookie('id', hash)
+        res.cookie('id', hash, { maxAge: 100000000})
         res.end('admin')
     } else {
         res.end('noEx')

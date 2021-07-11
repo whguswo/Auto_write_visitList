@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {  //ts -> js 로 바꿔 인식
     entry: {    //시작하는 부분
+        index: './src/index.ts',
         addUser: './src/addUser.ts',
         'check/admin': './src/check/admin.ts',
         code: './src/code.ts',
@@ -49,11 +50,6 @@ module.exports = {  //ts -> js 로 바꿔 인식
     },
     plugins:[
         new HtmlWebpackPlugin({
-            template: './src/index.html',
-            filename:'./index.html',
-            chunks:['nav']
-        }),
-        new HtmlWebpackPlugin({
             template: './src/addUser.html',
             filename:'./addUser.html',
             chunks:['addUser']
@@ -83,6 +79,11 @@ module.exports = {  //ts -> js 로 바꿔 인식
             filename:'./scan.html',
             chunks:['scan']
         }),
+        new HtmlWebpackPlugin({
+            template: './src/index.html',
+            filename: './index.html',
+            chunks: ['index']
+        })
     ],
     // devServer:{
     //     contentBase:`${__dirname}/dist`,

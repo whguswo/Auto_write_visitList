@@ -1,13 +1,10 @@
 #code {
-    position: absolute;
-    left: 70px;
-    margin: 10px;
+    margin: 30px;
+    margin-left: 85px;
     font-size: 18px;
 }
 #main {
-    position: absolute;
-    bottom: 30px;
-    left: 60px;
+    margin-left: 63px;
 }
 #main > * {
     margin-left: 10px;
