@@ -6,14 +6,21 @@ const rekoServer = '/blob'
 const video = document.querySelector<HTMLVideoElement>('video')
 const visitButton = document.querySelector<HTMLButtonElement>('button')
 const canvas = document.querySelector<HTMLCanvasElement>('canvas');
+const main = document.querySelector<HTMLDivElement>('#main')
+const loading = document.querySelector<HTMLDivElement>('.loader')
 const ctx = canvas.getContext('2d');
 
 window.addEventListener('load', async (e) => {
+    main.style.display = 'none'
+    const tracks = await navigator.mediaDevices.enumerateDevices();
+    const deviceId = tracks.find(v => { if (v.kind === 'videoinput' && v.label !== 'OBS Virtual Camera') return true; return false; }).deviceId;
     let stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 680, height: 480 },
+        video: { width: 680, height: 480, deviceId },
         audio: false
     });
     video.srcObject = stream;
+    loading.style.display = 'none'
+    main.style.display = ''
 })
 
 visitButton.addEventListener('click', (e) => {

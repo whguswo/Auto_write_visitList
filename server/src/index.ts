@@ -32,11 +32,10 @@ app.use(express.raw({ limit: '50mb' }));
 app.use(cookies());
 
 app.use('/front/dist/check', (req, res, next) => {
-    console.log(req.cookies);
-    if(req.cookies.id == hash) {
+    if (req.cookies.id == hash) {
         next();
     } else {
-        res.redirect('/front/dist/login.html'); 
+        res.redirect('/front/dist/login.html');
     }
 })
 app.use('/front', express.static(path.resolve(__dirname, '../../front')));
@@ -86,7 +85,7 @@ app.post('/adduser', async (req, res) => {
     let param = req.query as unknown as UserNet;
     //차례로 이름, 주소, 전화번호
     let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
-    await addUser({ ...param, hash:qrHash })
+    await addUser({ ...param, hash: qrHash })
     console.log(param.type)
     await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
     console.log('유저 등록 완료')
@@ -103,14 +102,14 @@ app.post('/blob', async (req, res) => {
     const source = req.body as Buffer;
 
     const arr = []
-    try{
+    try {
         for await (let fileName of list) {
             const result = await awsRekog(client, fileName, source)
             if (result) {
                 arr.push(result)
             }
         }
-        if(arr.length) {
+        if (arr.length) {
             res.json(arr);
         } else {
             res.json(['noIden'])
@@ -118,7 +117,7 @@ app.post('/blob', async (req, res) => {
     } catch {
         res.json(['noPerson']);
     }
-    
+
 })
 app.post('/writeList', async (req, res) => {
     writeList(req.body.visit[0], req.body.visit[1])
@@ -139,13 +138,13 @@ app.get('/login', (req, res) => {
     res.redirect('/front/dist/login.html')
 })
 app.post('/login', (req, res) => {
-    if(req.body.id == 'admin' && req.body.pass == 'pass') {
-        res.cookie('id', hash, { maxAge: 100000000})
+    if (req.body.id == 'admin' && req.body.pass == 'pass') {
+        res.cookie('id', hash, { maxAge: 100000000 })
         res.end('admin')
     } else {
         res.end('noEx')
     }
-    
+
 })
 
 app.get('/code', (req, res) => {
