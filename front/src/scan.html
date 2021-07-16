@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>QR Scanner</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
     <style>
         video {
             display: block;
             height: 460px;
         }
+
         #main {
             position: absolute;
             left: 60px;
             height: 100%;
         }
+
         #turn {
             color: white;
             position: absolute;
@@ -24,11 +28,35 @@
             width: 100%;
             height: 10%;
             border: 0px;
+        }
 
+        .loader {
+            position: absolute;
+            top: 170px;
+            left: 140px;
+            z-index: 5;
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
+            border-radius: 50%;
+            width: 90px;
+            height: 90px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
         }
     </style>
 </head>
+
 <body>
+    <div class="loader"></div>
     <div class="navigation">
         <ul>
             <li id="visit">
@@ -68,4 +96,5 @@
         <button id='turn'>카메라 전환</button>
     </div>
 </body>
+
 </html>
