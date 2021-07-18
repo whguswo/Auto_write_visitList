@@ -14,9 +14,9 @@ const app = express();
 const PORT = 3000;
 const salt = 'whguswo'
 const hash = crypto.createHash('sha1').update(`admin${salt}pass`).digest('base64');
-// const tempOption:Options = {
-//     mode: "json",
-// }
+const tempOption:Options = {
+    mode: "json",
+}
 
 //AWS, DB
 
@@ -164,6 +164,21 @@ app.post('/qrCompare', (req, res) => {
 app.get('/scan', (req, res) => {
     res.sendFile('scan.html', {
         root: '../front/src'
+    })
+})
+
+app.get('/temp', (req, res) => {
+    res.redirect('/front/dist/tempTest.html')
+})
+app.post('/temp', (req, res) => {
+    PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
+        const arr = result[0].result;
+        for(let i = 0; i < 8; i++) {
+            for(let j = 0; j < 8; j++) {
+                arr[i][j] = arr[i][j] + 5
+            }
+        }
+        res.json(arr)
     })
 })
 
