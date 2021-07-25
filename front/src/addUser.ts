@@ -19,7 +19,7 @@ submit.addEventListener('click', async (e) => {
     submit.style.backgroundColor = 'gray'
     if (userName.value && address.value && phone.value && photo.style.backgroundImage) {
         console.log(file)
-        const result = await fetch(`https://192.168.0.91:3000/addUser?name=${userName.value}&address=${address.value}&phone=${phone.value}&type=${file.type}`, {
+        const result = await fetch(`/addUser?name=${userName.value}&address=${address.value}&phone=${phone.value}&type=${file.type}`, {
             method: 'POST',
             body: file,
             headers: {
