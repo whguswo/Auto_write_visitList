@@ -13,12 +13,13 @@
     <div id='con'>
         <h1>방명록 검색</h1>
         <div id='inputD'>
-            <input type="date" id="startTime"> ~ 
-            <input type="date" id="endTime">
+            <input type="date" id="startTime" class='dateInput'> ~ 
+            <input type="date" id="endTime" class='dateInput'>
+            <input type="text" placeholder="start temp" id='startTemp'> ~ 
+            <input type="text" placeholder="end temp" id='endTemp'>
         </div>
         <div id='inputN'>
-            <input type="text" placeholder="Name" id='name'>
-            <input type="text" placeholder="temp" id='temp'><br>
+            <input type="text" placeholder="Name" id='name'><br>
             <button id='searchBtn' class="btn btn-primary">검색</button>
             <button id='logoutBtn' class="btn btn-outline-danger">나가기</button>
         </div><br>

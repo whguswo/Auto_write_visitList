@@ -4,7 +4,10 @@ export interface Query{
         '$lte':string|Date;
     },
     name:string;
-    temp:string|number;
+    temp:{
+        '$gte':string|Number;
+        '$lte':string|Number;
+    };
 };
 
 export interface UserNet{

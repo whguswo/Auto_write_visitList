@@ -3,7 +3,8 @@ import "./admin.css";
 const startTime = document.querySelector<HTMLInputElement>('#startTime');
 const endTime = document.querySelector<HTMLInputElement>('#endTime');
 const nameInput = document.querySelector<HTMLInputElement>('#name')
-const tempInput = document.querySelector<HTMLInputElement>('#temp')
+const startTemp = document.querySelector<HTMLInputElement>('#startTemp')
+const endTemp = document.querySelector<HTMLInputElement>('#endTemp')
 const tbody = document.querySelector<HTMLTableElement>('tbody')
 const pageNum = document.querySelector<HTMLDivElement>('#pageNum')
 const searchBtn = document.querySelector<HTMLButtonElement>('#searchBtn')
@@ -34,7 +35,7 @@ logoutBtn.addEventListener('click', () => {
 })
 
 const search = async () => {
-    let query = { 'date': { '$gte': startTime.value, '$lte': endTime.value }, 'name': nameInput.value, 'temp': tempInput.value }
+    let query = { 'date': { '$gte': startTime.value, '$lte': endTime.value }, 'name': nameInput.value, 'temp': { '$gte': startTemp.value, '$lte': endTemp.value } }
 
     const result = await fetch('/search', {
         method: 'POST',

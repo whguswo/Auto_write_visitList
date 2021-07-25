@@ -52,16 +52,30 @@ visitButton.addEventListener('click', (e) => {
         } else {
             let answer = confirm(`${data[0]}이(가) 맞나요?`)
             if (answer) {
-                let date = new Date()
-                const write = await fetch('/writeList', {
+                const result = await fetch('/temp', {
                     method: 'POST',
-                    body: JSON.stringify({
-                        visit: [data[0], date.toISOString()]
-                    }),
                     headers: {
-                        'Content-Type': 'application/json'
-                    }
+                        'Content-Type': 'text/html'
+                    },
+                    body: '측정',
                 });
+                let temp = await result.text()
+                console.log(temp)
+                if(temp == 'normal') {
+                    let date = new Date()
+                    const write = await fetch('/writeList', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            visit: [data[0], date.toISOString()]
+                        }),
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    alert('방명록이 작성되었습니다.')
+                } else {
+                    alert('체온이 너무 높습니다. 좀 더 떨어져서 측정하거나 잠시뒤 다시 측정해주세요.')
+                }
             } else {
                 let reconfirm = confirm('사용자 등록을 하셨나요?')
                 if (reconfirm) {

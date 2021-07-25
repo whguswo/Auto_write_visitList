@@ -1,6 +1,11 @@
 body {
     width: 100%;
 }
+
+#name {
+    width: 96%;
+}
+
 /* table {
     border: 1px solid black;
     border-collapse: collapse;
@@ -15,7 +20,7 @@ thead {
     height: 100%;
 }
 input {
-    width: 40%;
+    width: 44%;
     margin: 3px;
 }
 #page {
@@ -39,5 +44,8 @@ input {
 }
 .btn {
     margin: 3px;
-    width: 40%;
+    width: 46.5%;
 }
+/* .dateInput {
+    width: 40%;
+} */

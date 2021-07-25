@@ -55,10 +55,19 @@ const search = async (query:Query, res:Response) => {
     if(query.name == '') {
         delete query.name
     }
-    if(query.temp != '') {
-        query.temp = Number(query.temp)
+    if(query.temp['$gte'] != '') {
+        query.temp['$gte'] = Number(query.temp['$gte'])
     } else {
-        delete query.temp
+        delete query.temp['$gte']
+    }
+    if(query.temp['$lte'] != '') {
+        query.temp['$lte'] = Number(query.temp['$lte'])
+    } else {
+        if(query.temp['$gte']) {
+            delete query.temp['$lte']
+        } else {
+            delete query.temp
+        }
     }
     
     

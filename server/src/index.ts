@@ -170,16 +170,36 @@ app.get('/scan', (req, res) => {
 app.get('/temp', (req, res) => {
     res.redirect('/front/dist/tempTest.html')
 })
-app.post('/temp', (req, res) => {
+app.post('/tempTest', (req, res) => {
     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
         const arr = result[0].result;
         for(let i = 0; i < 8; i++) {
             for(let j = 0; j < 8; j++) {
-                arr[i][j] = arr[i][j] + 5
+                arr[i][j] = arr[i][j] + 7
             }
         }
         res.json(arr)
     })
+})
+app.post('/temp', async(req, res) => {
+    let flag = false
+    PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
+        const arr = result[0].result;
+        for(let i = 0; i < 8; i++) {
+            for(let j = 0; j < 8; j++) {
+                if(parseFloat(arr[i][j] + 7) > 38) {
+                    flag = true
+                }
+            }
+        }
+        console.log(flag)
+        if(flag) {
+            res.end('bad')
+        } else {
+            res.end('normal')
+        }
+    })
+    
 })
 
 https.createServer(option, app).listen(PORT, () => {

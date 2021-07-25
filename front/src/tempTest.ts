@@ -1,7 +1,7 @@
 const scan = document.querySelector<HTMLButtonElement>('#scan');
 
 scan.addEventListener('click', async() => {
-    const result = await fetch('/temp', {
+    const result = await fetch('/tempTest', {
         method: 'POST',
         headers: {
             'Content-Type': 'text/html'
@@ -11,4 +11,5 @@ scan.addEventListener('click', async() => {
     let data = await result.text()
     data = await JSON.parse(data)
     console.log(data)
+    
 })
