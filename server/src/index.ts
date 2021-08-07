@@ -120,7 +120,7 @@ app.post('/blob', async (req, res) => {
 
 })
 app.post('/writeList', async (req, res) => {
-    writeList(req.body.visit[0], req.body.visit[1])
+    writeList(req.body.visit[0], req.body.visit[1], req.body.visit[2])
     res.end('방명록 작성완료')
 })
 
@@ -157,8 +157,26 @@ app.post('/qrHash', (req, res) => {
     res.end(crypto.createHash('sha256').update(req.body).digest('base64'))
 })
 app.post('/qrCompare', (req, res) => {
-    findHash(req.body.result[0], req.body.result[1], res)
-    // writeList(req.body.visit[0], req.body.visit[1])
+    let flag = false
+    let highest_temp = 0
+    PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
+        const arr = result[0].result;
+        for(let i = 0; i < 8; i++) {
+            for(let j = 0; j < 8; j++) {
+                if(parseFloat(arr[i][j] + 7) > 38) {
+                    flag = true
+                }
+                if(parseFloat(arr[i][j] + 7) > highest_temp) {
+                    highest_temp = parseFloat(arr[i][j] + 7)
+                }
+            }
+        }
+        if(flag) {
+            res.end('bad')
+        } else {
+            findHash(req.body.result[0], req.body.result[1], String(highest_temp), res)
+        }
+    })
 })
 
 app.get('/scan', (req, res) => {
@@ -170,19 +188,20 @@ app.get('/scan', (req, res) => {
 app.get('/temp', (req, res) => {
     res.redirect('/front/dist/tempTest.html')
 })
-app.post('/tempTest', (req, res) => {
-    PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
-        const arr = result[0].result;
-        for(let i = 0; i < 8; i++) {
-            for(let j = 0; j < 8; j++) {
-                arr[i][j] = arr[i][j] + 7
-            }
-        }
-        res.json(arr)
-    })
-})
+// app.post('/tempTest', (req, res) => {
+//     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
+//         const arr = result[0].result;
+//         for(let i = 0; i < 8; i++) {
+//             for(let j = 0; j < 8; j++) {
+//                 arr[i][j] = arr[i][j] + 7
+//             }
+//         }
+//         res.json(arr)
+//     })
+// })
 app.post('/temp', async(req, res) => {
     let flag = false
+    let highest_temp = 0
     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
         const arr = result[0].result;
         for(let i = 0; i < 8; i++) {
@@ -190,16 +209,18 @@ app.post('/temp', async(req, res) => {
                 if(parseFloat(arr[i][j] + 7) > 38) {
                     flag = true
                 }
+                if(parseFloat(arr[i][j] + 7) > highest_temp) {
+                    highest_temp = parseFloat(arr[i][j] + 7)
+                }
             }
         }
-        console.log(flag)
         if(flag) {
             res.end('bad')
         } else {
-            res.end('normal')
+            res.end(String(highest_temp))
+            console.log(highest_temp)
         }
     })
-    
 })
 
 https.createServer(option, app).listen(PORT, () => {

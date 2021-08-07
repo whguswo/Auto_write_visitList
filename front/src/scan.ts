@@ -34,7 +34,9 @@ const setResult = async (result: string) => {
         }
     });
     const data = await compareRes.text()
-    if (data == 'noUser') {
+    if(data == 'bad') {
+        alert('체온이 너무 높습니다. 좀 더 떨어져서 측정하거나 잠시뒤 다시 측정해주세요.')
+    } else if (data == 'noUser') {
         alert('등록된 사용자가 아닙니다.\n입력된 정보를 다시 확인해주세요.')
         window.location.reload()
     } else {

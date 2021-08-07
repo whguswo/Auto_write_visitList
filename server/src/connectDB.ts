@@ -80,11 +80,12 @@ const search = async (query:Query, res:Response) => {
     }
 };
 
-const writeList = async(name:string, date:string) => {
+const writeList = async(name:string, date:string, temp:string) => {
+    console.log(temp)
     await dbMap.get('visit-list').insertOne({
         "name": name,
         "date": new Date(date),
-        "temp": 36.5,
+        "temp":  parseFloat(temp),
     })
     console.log('uploaded')
 };
@@ -93,13 +94,13 @@ const addUser = (obj:UserQuery) => {
     return dbMap.get('user-list').insertOne(obj);
 };
 
-const findHash = async(hash:string, time:string, res:Response) => {
+const findHash = async(hash:string, time:string, temp:string, res:Response) => {
     const arr = await dbMap.get('user-list').find({ "hash": hash}).toArray();
     if(arr.length == 0) {
         console.log('등록되지않은 사용자입니다.')
         res.end('noUser')
     } else {
-        writeList(arr[0].name, time)
+        writeList(arr[0].name, time, '36.5')
         res.end('complete')
     }
     

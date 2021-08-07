@@ -61,12 +61,12 @@ visitButton.addEventListener('click', (e) => {
                 });
                 let temp = await result.text()
                 console.log(temp)
-                if(temp == 'normal') {
+                if(temp != 'bad') {
                     let date = new Date()
                     const write = await fetch('/writeList', {
                         method: 'POST',
                         body: JSON.stringify({
-                            visit: [data[0], date.toISOString()]
+                            visit: [data[0], date.toISOString(), temp]
                         }),
                         headers: {
                             'Content-Type': 'application/json'

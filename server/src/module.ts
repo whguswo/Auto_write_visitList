@@ -170,7 +170,6 @@ const awsRekog = (client:AWS.Rekognition, fileName:string, source:Buffer) => {
                 console.log('사람이 없습니다.')
                 reject('noPerson')
             } else if(response.FaceMatches.length === 0) {
-                console.log('등록된 사용자가 없습니다.')
                 resolve('');
             } else {
                 response.FaceMatches.forEach((data) => {
@@ -179,10 +178,8 @@ const awsRekog = (client:AWS.Rekognition, fileName:string, source:Buffer) => {
                         // let similarity = data.Similarity
                         // console.log('인식 완료!')
                         // res.end(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-                        fileName = fileName.replace('.jpg', '')
-                        fileName = fileName.replace('.png', '')
-                        fileName = fileName.replace('.jpeg', '')
-                        resolve(fileName)
+                        let userName = fileName.split('.')[0]
+                        resolve(userName)
                     }
                 })
             }
