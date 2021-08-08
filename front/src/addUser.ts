@@ -27,8 +27,13 @@ submit.addEventListener('click', async (e) => {
             }
         });
         let data = await result.text()
-        alert(data)
-        location.reload()
+        if(data == 'noPerson') {
+            alert('사진에 사람이없습니다. 자신이 나온 사진을 업로드해주세요.')
+        } else {
+            alert(data)
+            location.reload()
+        }
+        
     } else {
         alert('정보를 모두 입력해주세요')
     }
@@ -55,6 +60,5 @@ const readURL = () => {
     if (file) {
         const url = URL.createObjectURL(file);
         photo.style.backgroundImage = `url(${url})`;
-        // URL.revokeObjectURL(url)
     }
 }

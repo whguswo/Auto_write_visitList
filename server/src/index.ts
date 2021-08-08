@@ -82,14 +82,24 @@ app.get('/adduser', (req, res) => {
 
 // 유저등록 구현할 부분
 app.post('/adduser', async (req, res) => {
-    let param = req.query as unknown as UserNet;
-    //차례로 이름, 주소, 전화번호
-    let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
-    await addUser({ ...param, hash: qrHash })
-    console.log(param.type)
-    await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
-    console.log('유저 등록 완료')
-    res.end('유저 등록 완료')
+    const client = new AWS.Rekognition();
+    const fileName = 'sample.jpg'
+    const source = req.body as Buffer;
+
+    
+    const result = await awsRekog(client, fileName, source)
+    .then ( async() => {
+        let param = req.query as unknown as UserNet;
+        //차례로 이름, 주소, 전화번호
+        let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
+        await addUser({ ...param, hash: qrHash })
+        console.log(param.type)
+        await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
+        console.log('유저 등록 완료')
+        res.end('유저 등록 완료')
+    }).catch(() => {
+        res.end('noPerson')
+    });  
 })
 
 app.post('/search', (req, res) => {
