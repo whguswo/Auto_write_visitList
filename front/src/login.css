@@ -1,50 +1,96 @@
-body {
-    background: linear-gradient( to top, rgb(130, 179, 243), rgb(198, 131, 243) );
-    width: 300px;
-    height: 89.7vh;
-    color: white;
-    /* background-repeat: no-repeat; */
+@media screen and (max-width: 480px) {
+    body {
+        background: linear-gradient( to top, rgb(130, 179, 243), rgb(198, 131, 243) );
+        width: 300px;
+        height: 89.7vh;
+        color: white;
+    }
+    #main {
+        height: 100%;
+        position: absolute;
+        left: 65px;
+        width: calc(100% - 65px);
+    }
+    #photo {
+        background-image: url("img/warn-thermometer.png");
+        width: 100px;
+        height: 100px;
+        margin: 20px;
+        margin-left: 60px;
+        background-repeat: no-repeat;
+    }
+    #desc {
+        font-size: 15px;
+    }
+    input {
+        text-align: center;
+        width: 230px;
+        height: 55px;
+        font-size: 18px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        margin-left: 10px;
+    }
+    button {
+        text-align: center;
+        margin-left: 10px;
+        color: white;
+        width: 230px;
+        height: 55px;
+        font-size: 18px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+        border: 2px solid white;
+        background-color: rgb(94, 94, 250);
+    }
 }
-
-#main {
-    height: 100%;
-    position: absolute;
-    left: 65px;
-    width: calc(100% - 65px);
-}
-input {
-    text-align: center;
-    width: 200px;
-    height: 55px;
-    font-size: 18px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    margin-left: 10%;
-}
-
-button {
-    text-align: center;
-    margin-left: 10%;
-    color: white;
-    width: 200px;
-    height: 55px;
-    font-size: 18px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    background-color: rgb(94, 94, 250);
-}
-
-#desc {
-    font-size: 15px;
-}
-
-#photo {
-    background-image: url("img/warn-thermometer.png");
-    width: 100px;
-    height: 100px;
-    margin: 20px;
-    margin-left: 60px;
-    background-repeat: no-repeat;
+@media (min-width:1025px) {
+    body {
+        background: linear-gradient( to top, rgb(130, 179, 243), rgb(198, 131, 243) );
+        width: 300px;
+        height: 100vh;
+        color: white;
+    }
+    #main {
+        height: 100%;
+        position: absolute;
+        left: 40%;
+        /* width: calc(100% - 65px); */
+    }
+    #photo {
+        background-image: url("img/warn-thermometer.png");
+        background-size: 200px 200px;
+        width: 200px;
+        height: 200px;
+        margin: 20px;
+        margin-left: 120px;
+        background-repeat: no-repeat;
+    }
+    h1 {
+        font-size: 65px;
+    }
+    #desc {
+        font-size: 20px;
+    }
+    input {
+        text-align: center;
+        width: 500px;
+        height: 55px;
+        font-size: 18px;
+        border-radius: 10px;
+        margin-top: 20px;
+    }
+    button {
+        text-align: center;
+        color: white;
+        width: 500px;
+        height: 55px;
+        font-size: 18px;
+        border-radius: 10px;
+        margin-top: 30px;
+        border: 2px solid white;
+        background-color: rgb(94, 94, 250);
+    }
 }
 
 #login {

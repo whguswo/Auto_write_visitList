@@ -1,32 +1,76 @@
-#code {
-    margin: 30px;
-    margin-left: 85px;
-    font-size: 18px;
+@media screen and (max-width: 480px) {
+    #main {
+        margin-left: 63px;
+    }
+    #code {
+        margin: 30px;
+        margin-left: 85px;
+        font-size: 18px;
+    }
+    input {
+        width: 230px;
+        height: 55px;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 10px;
+    }
+    #makeQR{
+        color: white;
+        border: 0px;
+        background-color: rgb(228, 140, 221);
+        border-radius: 10px;
+        width: 230px;
+        height: 55px;
+    }
+    
+    #main > * {
+        margin-left: 10px;
+        margin-bottom: 3px;
+    }
+
+    input::placeholder {
+        font-size: 18px;
+        text-align: center;
+    }
 }
-#main {
-    margin-left: 63px;
-}
-#main > * {
-    margin-left: 10px;
-    margin-bottom: 3px;
-}
-input {
-    width: 230px;
-    height: 55px;
-    font-size: 18px;
-    text-align: center;
-    border-radius: 10px;
-}
-input::placeholder {
-    font-size: 18px;
-    text-align: center;
+@media (min-width:1025px) {
+    #main {
+        position: absolute;
+        left: 41%;
+        top: 280px;
+    }
+    #code {
+        position: absolute;
+        left: 45%;
+        top: 50px;
+        margin-left: 25px;
+        font-size: 18px;
+    }
+    input {
+        width: 400px;
+        height: 55px;
+        font-size: 18px;
+        text-align: center;
+        border-radius: 10px;
+    }
+    #makeQR{
+        color: white;
+        border: 0px;
+        background-color: rgb(228, 140, 221);
+        border-radius: 10px;
+        width: 400px;
+        height: 55px;
+    }
+    #main > * {
+        margin-left: 10px;
+        margin-bottom: 7px;
+    }
+
+    input::placeholder {
+        font-size: 18px;
+        text-align: center;
+    }
 }
 
-#makeQR{
-    color: white;
-    border: 0px;
-    background-color: rgb(228, 140, 221);
-    border-radius: 10px;
-    width: 230px;
-    height: 55px;
-}
+
+
