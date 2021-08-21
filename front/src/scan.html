@@ -24,7 +24,14 @@
                 width: 90px;
                 height: 90px;
                 animation: spin 2s linear infinite;
-            }   
+                
+            }
+            #info {
+                display: none;
+            }
+            #desc {
+                display: none;
+            }
         }
         @media (min-width:1025px) {
             video {
@@ -42,7 +49,41 @@
                 width: 150px;
                 height: 150px;
                 animation: spin 2s linear infinite;
-            } 
+            }
+            #info {
+                background-color: white;
+                border: 3px solid #3498db;
+                width: 310px;
+                height: 50%;
+                position: absolute;
+                right: 0px;
+                top: 0px;
+            }
+            #info > h1 {
+                font-size: 40px;
+                width: 100%;
+                text-align: center;
+            }
+            fieldset {
+                font-size: 25px;
+                margin-left: 20px;
+                margin-top: 20px;
+                width: 85%
+            }
+            #desc {
+                background-color: white;
+                border: 3px solid #db3934;
+                width: 310px;
+                height: 50%;
+                position: absolute;
+                right: 0px;
+                bottom: 0px;
+                
+            }
+            #desc > p {
+                font-size: 20px;
+                margin-bottom: 10px;
+            }
         }
         
         
@@ -117,6 +158,18 @@
     <div id='main'>
         <video id="qrVideo"></video>
         <button id='turn'>카메라 전환</button>
+    </div>
+    <div id='info'>
+        <h1>사용자 정보</h1>
+        
+    </div>
+    <div id='desc'>
+        <p>※정상체온은 38º 이하입니다.</p>
+        <p>※열화상 카메라는 건들지 말아주세요. 온도측정이 부정확해질 수 있습니다.</p>
+        <p>※카메라 중앙에 QR코드가 보이게 들어주세요.</p>
+        <p>※정상체온인데도 온도가 높게 나왔을시 시간이 조금 지난 뒤 재측정 해주세요.</p>
+        <p>※정상체온인데도 온도가 높게 나왔을시 조금 뒤로가서 측정해주세요.</p>
+        <p>※등록된 사용자가 없을시에는 QR코드 생성시 오타가 있는지 확인해주세요.</p>
     </div>
 </body>
 

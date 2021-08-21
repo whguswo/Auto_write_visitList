@@ -100,8 +100,8 @@ const findHash = async(hash:string, time:string, temp:string, res:Response) => {
         console.log('등록되지않은 사용자입니다.')
         res.end('noUser')
     } else {
-        writeList(arr[0].name, time, '36.5')
-        res.end('complete')
+        writeList(arr[0].name, time, temp)
+        res.end(JSON.stringify([arr[0].name, time, temp]))
     }
     
     // console.log(` == Find ${hash} ==`)

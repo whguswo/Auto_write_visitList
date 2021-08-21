@@ -11,11 +11,41 @@ const loading = document.querySelector<HTMLDivElement>('.loader')
 const ctx = canvas.getContext('2d');
 
 window.addEventListener('load', async (e) => {
+    
     main.style.display = 'none'
     const tracks = await navigator.mediaDevices.enumerateDevices();
     const deviceId = tracks.find(v => { if (v.kind === 'videoinput' && v.label !== 'OBS Virtual Camera') return true; return false; }).deviceId;
+    let filter = "win32|win64|mac";
+
+    if(navigator.platform){
+
+        if (0 > filter.indexOf(navigator.platform.toLowerCase())) {    
+            //mobile
+            let stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: 680, height: 480, deviceId },
+                // video: { width: 1523, height: 880, deviceId }
+                audio: false
+            });
+            video.srcObject = stream;
+            loading.style.display = 'none'
+            main.style.display = ''
+            
+        } else {
+            //PC
+            let stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: 680, height: 480, deviceId },
+                // video: { width: 1523, height: 880, deviceId }
+                audio: false
+            });
+            video.srcObject = stream;
+            loading.style.display = 'none'
+            main.style.display = ''
+        }
+        
+    }
     let stream = await navigator.mediaDevices.getUserMedia({
         video: { width: 680, height: 480, deviceId },
+        // video: { width: 1523, height: 880, deviceId }
         audio: false
     });
     video.srcObject = stream;
