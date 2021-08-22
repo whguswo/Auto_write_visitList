@@ -30,7 +30,10 @@ searchBtn.addEventListener('click', () => {
     search()
 })
 
-logoutBtn.addEventListener('click', () => {
+logoutBtn.addEventListener('click', async() => {
+    const result = await fetch('/logout', {
+        method: 'GET',
+    });
     location.href = '/'
 })
 

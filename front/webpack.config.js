@@ -11,7 +11,6 @@ module.exports = {  //ts -> js 로 바꿔 인식
         login:'./src/login.ts',
         visit:'./src/visit.ts',
         scan: './src/scan.ts',
-        tempTest: '/src/tempTest.ts'
     },
     devtool: 'inline-source-map',
     mode:'development',
@@ -85,11 +84,6 @@ module.exports = {  //ts -> js 로 바꿔 인식
             filename: './index.html',
             chunks: ['index']
         }),
-        new HtmlWebpackPlugin({
-            template: './src/tempTest.html',
-            filename: './tempTest.html',
-            chunks: ['tempTest']
-        })
     ],
     // devServer:{
     //     contentBase:`${__dirname}/dist`,

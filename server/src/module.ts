@@ -62,7 +62,6 @@ const uploadFileAsBuffer = (buf:Buffer, name:string, type:string) => {
 
     return new Promise((res, rej) => {
         s3.upload(params, (err:AWS.AWSError, data:AWS.S3.ManagedUpload.SendData) => {
-            // console.log(`File uploaded successfully. ${data.Location}`);
             if (err) rej(err)
             res('uploaded')
         });
@@ -110,46 +109,6 @@ const getList = (bucket:string) => {
     })
 }
 
-// const awsRekog = (client, fileName) => {
-//     return new Promise((resolve, reject) => {
-//         const params = {
-//             SourceImage: {
-//                 S3Object: {
-//                     Bucket: bucket,
-//                     Name: photo_source
-//                 },
-//             },
-//             TargetImage: {
-//                 S3Object: {
-//                     Bucket: bucket,
-//                     Name: fileName
-//                 },
-//             },
-//             SimilarityThreshold: 80
-//         };
-
-//         client.compareFaces(params, async (err, response) => {
-//             if(!response) {
-//                 console.log('사람이 없습니다.')
-//                 resolve(false)
-//             } else if(response.FaceMatches.length === 0) {
-//                 console.log('등록된 사용자가 없습니다.')
-//                 resolve(false)
-//             }
-//             response.FaceMatches.forEach(data => {
-//                 if (data) {
-//                     // let position = data.Face.BoundingBox
-//                     // let similarity = data.Similarity
-//                     // console.log('인식 완료!')
-//                     // res.end(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
-//                     resolve(fileName)
-//                 }
-//             })
-//         });
-        
-//     })
-// }
-
 const awsRekog = (client:AWS.Rekognition, fileName:string, source:Buffer) => {
     return new Promise((resolve:(value:string)=>void, reject:(value:string)=>void) => {
         const params = {
@@ -174,10 +133,6 @@ const awsRekog = (client:AWS.Rekognition, fileName:string, source:Buffer) => {
             } else {
                 response.FaceMatches.forEach((data) => {
                     if (data) {
-                        // let position = data.Face.BoundingBox
-                        // let similarity = data.Similarity
-                        // console.log('인식 완료!')
-                        // res.end(`The face at: ${position.Left}, ${position.Top} matches with ${similarity} % confidence`)
                         let userName = fileName.split('.')[0]
                         resolve(userName)
                     }

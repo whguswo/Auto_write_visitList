@@ -54,6 +54,7 @@ const setResult = async (result: string) => {
             } else {
                 info.innerHTML = '<h1>사용자 정보</h1>'
                 let countDiv = document.createElement('div')
+                countDiv.classList.add('count')
                 let arr = JSON.parse(data)
                 arr[1] = new Date(arr[1])
                 arr[1] = `${arr[1].getFullYear()}-${arr[1].getMonth() + 1}-${arr[1].getDate()} ${arr[1].getHours()}:${arr[1].getMinutes()}:${arr[1].getSeconds()}`

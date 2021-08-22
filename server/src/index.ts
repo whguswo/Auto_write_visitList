@@ -1,6 +1,7 @@
 import express, { Request } from 'express'
 import https from 'https'
 import path from 'path';
+import * as dotenv from 'dotenv';
 import qrcode from 'qrcode';
 import queryString from 'querystring'
 import { exec } from 'child_process';
@@ -47,25 +48,6 @@ const option = {
     agent: false
 };
 
-//온도부분!!! 테스트중
-
-
-// PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
-//     const arr = result[0].result;
-//     console.log(arr)
-//     for(let i of arr) { 
-//         for(let j of i) {
-//             if(j > 40) {  
-//                 console.log('비정상!')
-//             }
-//         }
-//     }
-// })
-
-// uploadFile('source.jpg') 업로드
-// removeFile('source.jpg') 삭제
-// getList(bucket) 목록
-
 app.get('/', (req, res) => {
     res.redirect('/front/dist/index.html')
 })
@@ -80,7 +62,6 @@ app.get('/adduser', (req, res) => {
     res.redirect('/front/dist/addUser.html');
 })
 
-// 유저등록 구현할 부분
 app.post('/adduser', async (req, res) => {
     const client = new AWS.Rekognition();
     const fileName = 'sample.jpg'
@@ -140,12 +121,12 @@ app.get('/test', (req, res) => {
     })
 })
 app.get('/login', (req, res) => {
-    // if(req.cookies.id == hash) {
-    //     res.redirect('/front/dist/check/admin.html')
-    // } else {
-    //     res.redirect('/front/dist/login.html')
-    // }
-    res.redirect('/front/dist/login.html')
+    if(req.cookies.id == hash) {
+        res.redirect('/front/dist/check/admin.html')
+    } else {
+        res.redirect('/front/dist/login.html')
+    }
+    // res.redirect('/front/dist/login.html')
 })
 app.post('/login', (req, res) => {
     if (req.body.id == 'admin' && req.body.pass == 'pass') {
@@ -154,7 +135,10 @@ app.post('/login', (req, res) => {
     } else {
         res.end('noEx')
     }
-
+})
+app.get('/logout', (req, res) => {
+    res.cookie('id', '')
+    res.end('end')
 })
 
 app.get('/code', (req, res) => {
@@ -198,17 +182,7 @@ app.get('/scan', (req, res) => {
 app.get('/temp', (req, res) => {
     res.redirect('/front/dist/tempTest.html')
 })
-// app.post('/tempTest', (req, res) => {
-//     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
-//         const arr = result[0].result;
-//         for(let i = 0; i < 8; i++) {
-//             for(let j = 0; j < 8; j++) {
-//                 arr[i][j] = arr[i][j] + 7
-//             }
-//         }
-//         res.json(arr)
-//     })
-// })
+
 app.post('/temp', async(req, res) => {
     let flag = false
     let highest_temp = 0

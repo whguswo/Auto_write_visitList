@@ -9,6 +9,7 @@ const canvas = document.querySelector<HTMLCanvasElement>('canvas');
 const main = document.querySelector<HTMLDivElement>('#main')
 const loading = document.querySelector<HTMLDivElement>('.loader')
 const ctx = canvas.getContext('2d');
+const info = document.querySelector('#info')
 
 window.addEventListener('load', async (e) => {
     
@@ -33,7 +34,7 @@ window.addEventListener('load', async (e) => {
         } else {
             //PC
             let stream = await navigator.mediaDevices.getUserMedia({
-                video: { width: 680, height: 480, deviceId },
+                video: { width: 1200, height: 1200, deviceId },
                 // video: { width: 1523, height: 880, deviceId }
                 audio: false
             });
@@ -43,14 +44,14 @@ window.addEventListener('load', async (e) => {
         }
         
     }
-    let stream = await navigator.mediaDevices.getUserMedia({
-        video: { width: 680, height: 480, deviceId },
-        // video: { width: 1523, height: 880, deviceId }
-        audio: false
-    });
-    video.srcObject = stream;
-    loading.style.display = 'none'
-    main.style.display = ''
+    // let stream = await navigator.mediaDevices.getUserMedia({
+    //     video: { width: 680, height: 480, deviceId },
+    //     // video: { width: 1523, height: 880, deviceId }
+    //     audio: false
+    // });
+    // video.srcObject = stream;
+    // loading.style.display = 'none'
+    // main.style.display = ''
 })
 
 visitButton.addEventListener('click', (e) => {
@@ -90,7 +91,6 @@ visitButton.addEventListener('click', (e) => {
                     body: '측정',
                 });
                 let temp = await result.text()
-                console.log(temp)
                 if(temp != 'bad') {
                     let date = new Date()
                     const write = await fetch('/writeList', {
@@ -102,6 +102,31 @@ visitButton.addEventListener('click', (e) => {
                             'Content-Type': 'application/json'
                         }
                     });
+                    info.innerHTML = '<h1>사용자 정보</h1>'
+                    const arr = [data[0], date.toISOString(), temp]
+                    let countDiv = document.createElement('div')
+                    countDiv.classList.add('count')
+                    arr[1] = new Date(arr[1])
+                    arr[1] = `${arr[1].getFullYear()}-${arr[1].getMonth() + 1}-${arr[1].getDate()} ${arr[1].getHours()}:${arr[1].getMinutes()}:${arr[1].    getSeconds()}`
+                    let option = ['이름', '시간', '온도']
+                    for(let i = 0; i < 3; i++) {
+                        let field = document.createElement('fieldset')
+                        let legend = document.createElement('legend')
+                        legend.innerText = option[i]
+                        field.append(legend)
+                        field.append(arr[i])
+                        info.append(field)
+                    }
+                    let i = 5
+                    let count = setInterval(() => {
+                        countDiv.innerHTML = `${i}초 뒤에 자동으로 새로고침`
+                        if(i == 0) {
+                            window.location.reload()
+                        }
+                        i -= 1
+                    }, 1000)
+                    info.append(countDiv)
+
                     alert('방명록이 작성되었습니다.')
                 } else {
                     alert('체온이 너무 높습니다. 좀 더 떨어져서 측정하거나 잠시뒤 다시 측정해주세요.')

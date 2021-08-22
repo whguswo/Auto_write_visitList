@@ -1,7 +1,8 @@
 import { Request, Response } from 'express'
 import { MongoClient, Collection } from 'mongodb';
 import { Query, UserQuery } from './type';
-const client = new MongoClient('mongodb+srv://whguswo:whguswo@whguswo.ggu4w.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', { useUnifiedTopology: true });
+import * as dotenv from 'dotenv';
+const client = new MongoClient(process.env.DBURL, { useUnifiedTopology: true });
 
 const dbMap = new Map<string, Collection<any>>();
 (async()=>{
@@ -11,31 +12,6 @@ const dbMap = new Map<string, Collection<any>>();
     dbMap.set('user-list', db.collection('user-list'));
     console.log('Connected Complete!!!')
 })();
-// client.connect(async (err) => {
-//     if(err) {
-//         console.error(err)
-//     }
-//     console.log('Connected Complete!!!')
-//     const db = client.db('whguswodb')
-//     const collection = db.collection('visit-list')
-//     // const arr = await collection.find({}).toArray()
-//     // console.log(arr)
-
-// collection.find({ "name": "조현재", "date": "2021818"}).toArray((err, data) => {
-//     console.log(' == Find 조현재')
-//     for(let i = 0; i < data.length; i++) {
-//         console.log(data[i].temp)
-//     }
-// })
-
-//     //업로드
-//     // collection.insertOne({
-//     //     "name": '조현재',
-//     //     "date": '2021818',
-//     //     "hour": '13',
-//     //     "temp": '36.5',
-//     // })
-// })
 
 const search = async (query:Query, res:Response) => {
     if(query.date['$gte'] != '') {
@@ -70,7 +46,6 @@ const search = async (query:Query, res:Response) => {
         }
     }
     
-    
     const arr = await dbMap.get('visit-list').find(query).toArray();
     if(arr.length == 0) {
         console.log('검색결과 없음')
@@ -103,9 +78,6 @@ const findHash = async(hash:string, time:string, temp:string, res:Response) => {
         writeList(arr[0].name, time, temp)
         res.end(JSON.stringify([arr[0].name, time, temp]))
     }
-    
-    // console.log(` == Find ${hash} ==`)
-    // console.log(arr)
 }
 
 export { search, writeList, addUser, findHash };
