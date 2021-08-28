@@ -6,7 +6,8 @@ import qrcode from 'qrcode';
 import queryString from 'querystring'
 import { exec } from 'child_process';
 import fs from 'fs/promises';
-import { readFileSync } from 'fs'
+import xlsx from 'xlsx';
+import { readFileSync, createWriteStream } from 'fs'
 import cookies from 'cookie-parser';
 import crypto from 'crypto';
 import { PythonShell, Options } from 'python-shell';
@@ -205,6 +206,13 @@ app.post('/temp', async(req, res) => {
             console.log(highest_temp)
         }
     })
+})
+
+app.post('/csv', (req,res) => {
+    const workSheet = xlsx.utils.json_to_sheet(req.body);
+    const stream = xlsx.stream.to_csv(workSheet);
+    stream.pipe(res);
+
 })
 
 https.createServer(option, app).listen(PORT, () => {

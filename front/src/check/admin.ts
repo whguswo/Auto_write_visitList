@@ -10,10 +10,12 @@ const pageNum = document.querySelector<HTMLDivElement>('#pageNum')
 const searchBtn = document.querySelector<HTMLButtonElement>('#searchBtn')
 const logoutBtn = document.querySelector<HTMLButtonElement>('#logoutBtn')
 const pageButton = document.querySelectorAll<HTMLButtonElement>('.pageButton')
+const csvButton = document.querySelector<HTMLButtonElement>('#csvBtn')
 let page = 1
 let list: [] = [];
 
 interface visitList {
+    _id: string,
     name: string,
     date: string,
     temp: number
@@ -95,3 +97,26 @@ const render = (pageEdit: number) => {
         pageButton[1].disabled = false
     }
 }
+
+csvButton.addEventListener('click', async(e) => {
+    let arr = []
+    for(let i = 0; i < list.length; i++) {
+        let data: visitList = list[i]
+        delete data._id
+        arr.push(data)
+    }
+    const result = await fetch('/csv', {
+        method: 'POST',
+        body: JSON.stringify(arr),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const temp = await result.blob();
+    const url = URL.createObjectURL(temp);
+    let a = document.createElement('a');
+    a.download = '방명록.csv';
+    a.href = url;
+    a.click();
+    URL.revokeObjectURL(url);
+})

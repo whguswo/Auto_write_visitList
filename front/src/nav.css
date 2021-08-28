@@ -14,7 +14,7 @@ body {
     width: 60px;
     height: 100%;
     /* background-color: cornflowerblue; */
-    background-color: rgb(255, 88, 88);
+    background-color: rgb(88, 160, 255);
     border-right: 3px solid rgb(243, 240, 91);
     transition: 0.5s;
     overflow: hidden;
