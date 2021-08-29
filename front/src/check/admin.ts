@@ -103,6 +103,8 @@ csvButton.addEventListener('click', async(e) => {
     for(let i = 0; i < list.length; i++) {
         let data: visitList = list[i]
         delete data._id
+        let fullDate = new Date(data.date)
+        data.date = `${fullDate.getFullYear()}-${fullDate.getMonth() + 1}-${fullDate.getDate()} ${fullDate.getHours()}:${fullDate.getMinutes()}:${fullDate.getSeconds()}`
         arr.push(data)
     }
     const result = await fetch('/csv', {
