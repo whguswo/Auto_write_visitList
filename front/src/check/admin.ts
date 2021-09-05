@@ -11,7 +11,10 @@ const searchBtn = document.querySelector<HTMLButtonElement>('#searchBtn')
 const logoutBtn = document.querySelector<HTMLButtonElement>('#logoutBtn')
 const pageButton = document.querySelectorAll<HTMLButtonElement>('.pageButton')
 const csvButton = document.querySelector<HTMLButtonElement>('#csvBtn')
+const numberSelect = document.querySelector<HTMLSelectElement>('#number-select')
+
 let page = 1
+let sortNum = 7
 let list: [] = [];
 
 interface visitList {
@@ -22,14 +25,23 @@ interface visitList {
 }
 
 pageButton[0].addEventListener('click', (e) => {
-    render(-1)
+    render(-1, sortNum)
 })
 pageButton[1].addEventListener('click', (e) => {
-    render(1)
+    render(1, sortNum)
 })
 
 searchBtn.addEventListener('click', () => {
     search()
+})
+
+numberSelect.addEventListener('change', (e) => {
+    let sort = e.target as HTMLOptionElement
+    sortNum = Number(sort.value)
+    if(list.length != 0) {
+        page = 1
+        render(0, sortNum)
+    }
 })
 
 logoutBtn.addEventListener('click', async() => {
@@ -60,10 +72,10 @@ const search = async () => {
     }
     list = await JSON.parse(data)
     page = 1
-    await render(0)
+    await render(0, sortNum)
 }
 
-const render = (pageEdit: number) => {
+const render = (pageEdit: number, sort: number) => {
     tbody.innerHTML = ''
     page += pageEdit
     pageNum.innerHTML = String(page)
@@ -72,7 +84,7 @@ const render = (pageEdit: number) => {
     } else {
         pageButton[0].disabled = false;
     }
-    for (let i = 7 * (page - 1); i < 7 * page; i++) {
+    for (let i = sort * (page - 1); i < sort * page; i++) {
         let x: visitList = list[i]
         if (x == null) {
             break
@@ -91,7 +103,7 @@ const render = (pageEdit: number) => {
         tbody.append(tr)
     }
 
-    if (!list[page * 7 + 1]) {
+    if (!list[page * sort + 1]) {
         pageButton[1].disabled = true
     } else {
         pageButton[1].disabled = false
