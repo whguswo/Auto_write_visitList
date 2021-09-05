@@ -69,10 +69,11 @@ const search = async () => {
         td.colSpan = 3
         td.innerHTML = '검색결과 없음'
         tbody.append(td)
+    } else {
+        list = await JSON.parse(data)
+        page = 1
+        await render(0, sortNum)
     }
-    list = await JSON.parse(data)
-    page = 1
-    await render(0, sortNum)
 }
 
 const render = (pageEdit: number, sort: number) => {
