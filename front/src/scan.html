@@ -13,6 +13,7 @@
                 display: block;
                 height: 460px;
             }
+
             .loader {
                 position: absolute;
                 top: 170px;
@@ -24,20 +25,24 @@
                 width: 90px;
                 height: 90px;
                 animation: spin 2s linear infinite;
-                
+
             }
+
             #info {
                 display: none;
             }
+
             #desc {
                 display: none;
             }
         }
+
         @media (min-width:1025px) {
             video {
                 display: block;
                 height: 90%;
             }
+
             .loader {
                 position: absolute;
                 top: 40%;
@@ -50,6 +55,7 @@
                 height: 150px;
                 animation: spin 2s linear infinite;
             }
+
             #info {
                 background-color: white;
                 border: 3px solid #3498db;
@@ -59,17 +65,20 @@
                 right: 0px;
                 top: 0px;
             }
-            #info > h1 {
+
+            #info>h1 {
                 font-size: 40px;
                 width: 100%;
                 text-align: center;
             }
+
             fieldset {
                 font-size: 25px;
                 margin-left: 20px;
                 margin-top: 20px;
                 width: 85%
             }
+
             #desc {
                 background-color: white;
                 border: 3px solid #db3934;
@@ -78,20 +87,22 @@
                 position: absolute;
                 right: 0px;
                 bottom: 0px;
-                
+
             }
-            #desc > p {
+
+            #desc>p {
                 font-size: 20px;
                 margin-bottom: 10px;
             }
+
             .count {
                 font-size: 20px;
                 margin-left: 20px;
                 margin-top: 20px;
             }
         }
-        
-        
+
+
 
         #main {
             position: absolute;
@@ -110,7 +121,7 @@
             border: 0px;
         }
 
-        
+
 
         @keyframes spin {
             0% {
@@ -134,16 +145,10 @@
                     <span class="title">온도측정</span>
                 </a>
             </li>
-            <li id="addUser">
-                <a href="/addUser">
-                    <span class="icon"><i class="fa fa-user-plus" aria-hidden="true"></i></span>
-                    <span class="title">사용자 등록</span>
-                </a>
-            </li>
             <li id="admin">
                 <a href="/login">
                     <span class="icon"><i class="fa fa-list" aria-hidden="true"></i></span>
-                    <span class="title">방명록 확인</span>
+                    <span class="title">관리자페이지</span>
                 </a>
             </li>
             <li id="code">
@@ -166,7 +171,7 @@
     </div>
     <div id='info'>
         <h1>사용자 정보</h1>
-        
+
     </div>
     <div id='desc'>
         <p>※정상체온은 38º 이하입니다.</p>

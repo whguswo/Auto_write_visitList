@@ -1,4 +1,4 @@
-import "./admin.css";
+import "./readList.css";
 
 const startTime = document.querySelector<HTMLInputElement>('#startTime');
 const endTime = document.querySelector<HTMLInputElement>('#endTime');
@@ -38,17 +38,14 @@ searchBtn.addEventListener('click', () => {
 numberSelect.addEventListener('change', (e) => {
     let sort = e.target as HTMLOptionElement
     sortNum = Number(sort.value)
-    if(list.length != 0) {
+    if (list.length != 0) {
         page = 1
         render(0, sortNum)
     }
 })
 
-logoutBtn.addEventListener('click', async() => {
-    const result = await fetch('/logout', {
-        method: 'GET',
-    });
-    location.href = '/'
+logoutBtn.addEventListener('click', async () => {
+    window.history.back()
 })
 
 const search = async () => {
@@ -111,9 +108,9 @@ const render = (pageEdit: number, sort: number) => {
     }
 }
 
-csvButton.addEventListener('click', async(e) => {
+csvButton.addEventListener('click', async (e) => {
     let arr = []
-    for(let i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         let data: visitList = list[i]
         delete data._id
         let fullDate = new Date(data.date)

@@ -50,6 +50,15 @@
     .excel {
         width: 96%;
     }
+    .fa-bars {
+        margin: 10px;
+        margin-top: 7px;
+        position: absolute;
+        right: 0px;
+    }
+    .con {
+        margin: 0px;
+    }
 }
 @media (min-width:1025px) {
     body {
@@ -61,8 +70,8 @@
     }
     
     #con {
-        width: 99%;
-        margin-left: 5px;
+        width: 75%;
+        margin-left: 12%;
         height: 100%;
     }
     input {
