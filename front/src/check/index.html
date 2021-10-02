@@ -1,0 +1,178 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>관리자 페이지</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
+    <link href="../../src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .card-thum {
+            background-color: rgb(85, 89, 92);
+            height: 225px;
+        }
+
+
+        @media screen and (max-width: 480px) {
+            .icons {
+                margin-left: 36%;
+                margin-top: 27%;
+            }
+        }
+
+        @media (min-width: 1281px) {
+            .icons {
+                margin-left: 38%;
+                margin-top: 20%;
+            }
+        }
+
+        .icons {
+            color: black;
+            filter: invert(100%);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="bg-dark collapse" id="navbarHeader" style="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">방명록 관리 시스템</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>관리자 페이지</strong>
+                </a>
+                <div>
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">방명록 시스템 관리 페이지</h1>
+                    <p class="lead text-muted">
+                        사용자 등록, 사용자 삭제, 방명록 열람등의 관리자 작업
+                    </p>
+                    <!-- <p>
+                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
+                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    </p> -->
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+
+                    <div id="addUser" class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-thum bd-placeholder-img card-img-top">
+                                <i class="fa fa-user-plus fa-5x icons" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">사용자 등록</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">새로운 사용자를 등록합니다.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="delUser" class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-thum bd-placeholder-img card-img-top">
+                                <i class="fa fa-user-times fa-5x icons" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">사용자 삭제</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">등록된 사용자를 삭제합니다.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="readList" class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-thum bd-placeholder-img card-img-top">
+                                <i class="fa fa-list fa-5x icons" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">방명록 열람</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">작성된 방명록을 열람합니다.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="logout" class="col">
+                        <div class="card shadow-sm">
+                            <div class="card-thum bd-placeholder-img card-img-top">
+                                <i class="fa fa-sign-out fa-5x icons" aria-hidden="true"></i>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">나가기</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted">관리자 페이지에서 나가기</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#">맨 위로</a>
+            </p>
+            <p class="mb-1">관리자가 아닐경우 이 페이지에서 정보를 함부로 수정하지 마세요.</p>
+        </div>
+    </footer>
+    <script src="../../src/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

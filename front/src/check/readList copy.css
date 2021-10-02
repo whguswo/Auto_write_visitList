@@ -1,0 +1,105 @@
+@media screen and (max-width: 480px) {
+    body {
+        width: 100%;
+    }
+    
+    #name {
+        width: 96%;
+    }
+    
+    /* table {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    thead {
+        border: 1px solid black;
+    } */
+    
+    #con {
+        width: 97%;
+        margin-left: 8px;
+        height: 100%;
+    }
+    input {
+        width: 44%;
+        margin: 3px;
+    }
+    #page {
+        width: 120px;
+        margin: 0 auto;
+    }
+    .pageButton {
+        margin-bottom: 10px;
+        border: 1px solid black;
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+        background-color: white;
+    }
+    .pageButton:hover {
+        background-color: lightgray;
+    }
+    #pageNum {
+        display: inline;
+        font-size: 25px;
+    }
+    .btn {
+        margin: 3px;
+        width: 46.5%;
+    }
+    .excel {
+        width: 96%;
+    }
+    .fa-bars {
+        margin: 10px;
+        margin-top: 7px;
+        position: absolute;
+        right: 0px;
+    }
+}
+@media (min-width:1025px) {
+    body {
+        width: 100%;
+    }
+    
+    #name {
+        width: 41.4%;
+    }
+    
+    #con {
+        width: 99%;
+        margin-left: 5px;
+        height: 100%;
+    }
+    input {
+        width: 20%;
+        margin: 3px;
+    }
+    #page {
+        width: 120px;
+        margin: 0 auto;
+    }
+    .pageButton {
+        margin-bottom: 10px;
+        border: 1px solid black;
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+        background-color: white;
+    }
+    .pageButton:hover {
+        background-color: lightgray;
+    }
+    #pageNum {
+        display: inline;
+        font-size: 25px;
+    }
+    .btn {
+        margin: 3px;
+        width: 20.3%;
+    }
+    .excel {
+        width: 41.4%;
+    }
+}
+

@@ -5,15 +5,18 @@ module.exports = {  //ts -> js 로 바꿔 인식
     entry: {    //시작하는 부분
         index: './src/index.ts',
         addUser: './src/addUser.ts',
-        'check/admin': './src/check/admin.ts',
+        'check/readList': './src/check/readList.ts',
+        'check/index': './src/check/index.ts',
+        'check/addUser': './src/check/addUser.ts',
+        'check/delUser': './src/check/delUser.ts',
         code: './src/code.ts',
         nav: './src/nav.ts',
-        login:'./src/login.ts',
-        visit:'./src/visit.ts',
+        login: './src/login.ts',
+        visit: './src/visit.ts',
         scan: './src/scan.ts',
     },
     devtool: 'inline-source-map',
-    mode:'development',
+    mode: 'development',
     module: {
         rules: [
             {
@@ -21,7 +24,7 @@ module.exports = {  //ts -> js 로 바꿔 인식
                 use: 'ts-loader',
                 exclude: /node_modules/,
             }, {
-                test:/\.css$/,
+                test: /\.css$/,
                 use: ["style-loader", "css-loader"]
             }, {
                 test: /\.(png|jpe?g|gif)$/i,
@@ -48,36 +51,51 @@ module.exports = {  //ts -> js 로 바꿔 인식
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
     },
-    plugins:[
+    plugins: [
         new HtmlWebpackPlugin({
             template: './src/addUser.html',
-            filename:'./addUser.html',
-            chunks:['addUser']
+            filename: './addUser.html',
+            chunks: ['addUser']
         }),
         new HtmlWebpackPlugin({
-            template: './src/check/admin.html',
-            filename:'./check/admin.html',
-            chunks:['check/admin']
+            template: './src/check/readList.html',
+            filename: './check/readList.html',
+            chunks: ['check/readList']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/check/index.html',
+            filename: './check/index.html',
+            chunks: ['check/index']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/check/addUser.html',
+            filename: './check/addUser.html',
+            chunks: ['check/addUser']
+        }),
+        new HtmlWebpackPlugin({
+            template: './src/check/delUser.html',
+            filename: './check/delUser.html',
+            chunks: ['check/delUser']
         }),
         new HtmlWebpackPlugin({
             template: './src/code.html',
-            filename:'./code.html',
-            chunks:['code']
+            filename: './code.html',
+            chunks: ['code']
         }),
         new HtmlWebpackPlugin({
             template: './src/login.html',
-            filename:'./login.html',
-            chunks:['login']
+            filename: './login.html',
+            chunks: ['login']
         }),
         new HtmlWebpackPlugin({
             template: './src/visit.html',
-            filename:'./visit.html',
-            chunks:['visit']
+            filename: './visit.html',
+            chunks: ['visit']
         }),
         new HtmlWebpackPlugin({
             template: './src/scan.html',
-            filename:'./scan.html',
-            chunks:['scan']
+            filename: './scan.html',
+            chunks: ['scan']
         }),
         new HtmlWebpackPlugin({
             template: './src/index.html',

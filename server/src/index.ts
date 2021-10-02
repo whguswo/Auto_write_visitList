@@ -16,14 +16,14 @@ const app = express();
 const PORT = 3000;
 const salt = 'whguswo'
 const hash = crypto.createHash('sha1').update(`admin${salt}pass`).digest('base64');
-const tempOption:Options = {
+const tempOption: Options = {
     mode: "json",
 }
 
 //AWS, DB
 
-import { uploadFile, uploadFileAsBuffer, removeFile, getList, awsRekog } from './module'
-import { search, writeList, addUser, findHash } from './connectDB';
+import { uploadFile, uploadFileAsBuffer, removeFile, getList, getFile, awsRekog } from './module'
+import { userSearch, userDelete, search, writeList, addUser, findHash } from './connectDB';
 import { UserQuery, UserNet } from './type';
 const bucket = 'whguswo-bucket'
 const photo_source = 'source.jpg'
@@ -32,6 +32,8 @@ app.use(express.text());
 app.use(express.json());
 app.use(express.raw({ limit: '50mb' }));
 app.use(cookies());
+
+removeFile('alt.png')
 
 app.use('/front/dist/check', (req, res, next) => {
     if (req.cookies.id == hash) {
@@ -59,6 +61,7 @@ app.get('/visit', (req, res) => {
 app.get('/admin', (req, res) => {
     res.redirect('/front/dist/check/admin.html');
 })
+
 app.get('/adduser', (req, res) => {
     res.redirect('/front/dist/addUser.html');
 })
@@ -68,20 +71,20 @@ app.post('/adduser', async (req, res) => {
     const fileName = 'sample.jpg'
     const source = req.body as Buffer;
 
-    
+
     const result = await awsRekog(client, fileName, source)
-    .then ( async() => {
-        let param = req.query as unknown as UserNet;
-        //차례로 이름, 주소, 전화번호
-        let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
-        await addUser({ ...param, hash: qrHash })
-        console.log(param.type)
-        await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
-        console.log('유저 등록 완료')
-        res.end('유저 등록 완료')
-    }).catch(() => {
-        res.end('noPerson')
-    });  
+        .then(async () => {
+            let param = req.query as unknown as UserNet;
+            //차례로 이름, 주소, 전화번호
+            let qrHash = crypto.createHash('sha256').update(`${param.name}${param.phone}`).digest('base64')
+            await addUser({ ...param, hash: qrHash })
+            console.log(param.type)
+            await uploadFileAsBuffer(req.body as Buffer, param.name, param.type.replace('image/', ''))
+            console.log('유저 등록 완료')
+            res.end('유저 등록 완료')
+        }).catch(() => {
+            res.end('noPerson')
+        });
 })
 
 app.post('/search', (req, res) => {
@@ -122,8 +125,8 @@ app.get('/test', (req, res) => {
     })
 })
 app.get('/login', (req, res) => {
-    if(req.cookies.id == hash) {
-        res.redirect('/front/dist/check/admin.html')
+    if (req.cookies.id == hash) {
+        res.redirect('/front/dist/check/index.html')
     } else {
         res.redirect('/front/dist/login.html')
     }
@@ -145,28 +148,31 @@ app.get('/logout', (req, res) => {
 app.get('/code', (req, res) => {
     res.redirect('/front/dist/code.html')
 })
+
 app.get('/scan', (req, res) => {
     res.redirect('/front/dist/scan.html')
 })
+
 app.post('/qrHash', (req, res) => {
     res.end(crypto.createHash('sha256').update(req.body).digest('base64'))
 })
+
 app.post('/qrCompare', (req, res) => {
     let flag = false
     let highest_temp = 0
     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
         const arr = result[0].result;
-        for(let i = 0; i < 8; i++) {
-            for(let j = 0; j < 8; j++) {
-                if(parseFloat(arr[i][j] + 7) > 38) {
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (parseFloat(arr[i][j] + 7) > 38) {
                     flag = true
                 }
-                if(parseFloat(arr[i][j] + 7) > highest_temp) {
+                if (parseFloat(arr[i][j] + 7) > highest_temp) {
                     highest_temp = parseFloat(arr[i][j] + 7)
                 }
             }
         }
-        if(flag) {
+        if (flag) {
             res.end('bad')
         } else {
             findHash(req.body.result[0], req.body.result[1], String(highest_temp), res)
@@ -184,22 +190,22 @@ app.get('/temp', (req, res) => {
     res.redirect('/front/dist/tempTest.html')
 })
 
-app.post('/temp', async(req, res) => {
+app.post('/temp', async (req, res) => {
     let flag = false
     let highest_temp = 0
     PythonShell.run(path.resolve(__dirname, '..', 'temperature.py'), tempOption, (err, result) => {
         const arr = result[0].result;
-        for(let i = 0; i < 8; i++) {
-            for(let j = 0; j < 8; j++) {
-                if(parseFloat(arr[i][j] + 7) > 38) {
+        for (let i = 0; i < 8; i++) {
+            for (let j = 0; j < 8; j++) {
+                if (parseFloat(arr[i][j] + 7) > 38) {
                     flag = true
                 }
-                if(parseFloat(arr[i][j] + 7) > highest_temp) {
+                if (parseFloat(arr[i][j] + 7) > highest_temp) {
                     highest_temp = parseFloat(arr[i][j] + 7)
                 }
             }
         }
-        if(flag) {
+        if (flag) {
             res.end('bad')
         } else {
             res.end(String(highest_temp))
@@ -208,11 +214,31 @@ app.post('/temp', async(req, res) => {
     })
 })
 
-app.post('/csv', (req,res) => {
+app.post('/csv', (req, res) => {
     const workSheet = xlsx.utils.json_to_sheet(req.body);
     const stream = xlsx.stream.to_csv(workSheet);
     stream.pipe(res);
 
+})
+
+app.post('/userSearch', async (req, res) => {
+
+    const result = await userSearch(req.body)
+    if (result == 'noResult') {
+        res.end('noResult')
+    } else {
+        const buffer = await getFile(result, res)
+    }
+})
+
+app.post('/delUser', async (req, res) => {
+    const fileName = await userSearch(req.body)
+    if (fileName == 'noResult') {
+        res.end('noResult')
+    } else {
+        const result = await userDelete(req.body)
+        const result2 = await removeFile(fileName)
+    }
 })
 
 https.createServer(option, app).listen(PORT, () => {

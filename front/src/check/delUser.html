@@ -1,0 +1,119 @@
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>평리의 Poker</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        crossorigin="anonymous">
+    <link href="../../src/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="bg-dark collapse" id="navbarHeader" style="">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h4 class="text-white">About</h4>
+                        <p class="text-muted">방명록 관리 시스템</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <strong>관리자 페이지</strong>
+                </a>
+                <div>
+                    <button class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h1 class="fw-light">방명록 시스템 관리 페이지</h1>
+                    <p class="lead text-muted">
+                        사용자 등록, 사용자 삭제, 방명록 열람등의 관리자 작업
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+                <div id='main'>
+                    <h1>사용자 삭제</h1><br><br>
+                    <div id="inputZone">
+                        <div class="input-group input-group-lg flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">이름</span>
+                            <input type="text" id="name" class="form-control" placeholder="홍길동" aria-label="홍길동"
+                                aria-describedby="addon-wrapping">
+                        </div>
+                        <div class="input-group input-group-lg flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">전화번호</span>
+                            <input type="text" id="phone" class="form-control" placeholder="01012345678"
+                                aria-label="01012345678" aria-describedby="addon-wrapping">
+                        </div>
+                        <div class="input-group input-group-lg flex-nowrap">
+                            <span class="input-group-text" id="addon-wrapping">주소</span>
+                            <input type="text" id="address" class="form-control" placeholder="서울 강남구" aria-label="서울 강남구"
+                                aria-describedby="addon-wrapping">
+                        </div><br>
+                        <button type="button" id="search" class="btn btn-outline-primary">검색</button>
+                        <!-- <button type="button" id="search" class="btn btn-primary">검색</button> -->
+                        
+                    </div>
+                    <div id='photoZone'>
+                        <img id="face" src="../../src/check/img/alt.png" />
+                        <button type="button" id="deleteBtn" class="btn btn-danger btn-edit">삭제</button>
+                        <button type="button" id="cancelBtn" class="btn btn-secondary btn-edit">취소</button>
+                    </div>
+                    
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-muted py-5">
+        <div class="container">
+            <p class="float-end mb-1">
+                <a href="#">맨 위로</a>
+            </p>
+            <p class="mb-1">관리자가 아닐경우 이 페이지에서 정보를 함부로 수정하지 마세요.</p>
+        </div>
+    </footer>
+    <script src="../../src/assets/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+</html>

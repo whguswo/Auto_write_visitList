@@ -20,3 +20,9 @@ export interface UserNet{
 export interface UserQuery extends UserNet{
     hash:string;
 };
+
+export interface searchUserQuery {
+    name: string,
+    phone: string,
+    address: string
+}

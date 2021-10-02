@@ -1,11 +1,11 @@
 import { Request, Response } from 'express'
 import { MongoClient, Collection } from 'mongodb';
-import { Query, UserQuery } from './type';
+import { Query, UserQuery, searchUserQuery } from './type';
 import * as dotenv from 'dotenv';
 const client = new MongoClient(process.env.DBURL, { useUnifiedTopology: true });
 
 const dbMap = new Map<string, Collection<any>>();
-(async()=>{
+(async () => {
     await client.connect();
     const db = client.db('whguswodb');
     dbMap.set('visit-list', db.collection('visit-list'));
@@ -13,41 +13,41 @@ const dbMap = new Map<string, Collection<any>>();
     console.log('Connected Complete!!!')
 })();
 
-const search = async (query:Query, res:Response) => {
-    if(query.date['$gte'] != '') {
+const search = async (query: Query, res: Response) => {
+    if (query.date['$gte'] != '') {
         query.date['$gte'] = new Date(query.date['$gte']);
     } else {
         delete query.date['$gte']
     }
-    if(query.date['$lte'] != '') {
+    if (query.date['$lte'] != '') {
         query.date['$lte'] = new Date(query.date['$lte']);
     } else {
-        if(query.date['$gte']) {
+        if (query.date['$gte']) {
             delete query.date['$lte']
         } else {
             delete query.date
         }
     }
-    if(query.name == '') {
+    if (query.name == '') {
         delete query.name
     }
-    if(query.temp['$gte'] != '') {
+    if (query.temp['$gte'] != '') {
         query.temp['$gte'] = Number(query.temp['$gte'])
     } else {
         delete query.temp['$gte']
     }
-    if(query.temp['$lte'] != '') {
+    if (query.temp['$lte'] != '') {
         query.temp['$lte'] = Number(query.temp['$lte'])
     } else {
-        if(query.temp['$gte']) {
+        if (query.temp['$gte']) {
             delete query.temp['$lte']
         } else {
             delete query.temp
         }
     }
-    
+
     const arr = await dbMap.get('visit-list').find(query).toArray();
-    if(arr.length == 0) {
+    if (arr.length == 0) {
         console.log('검색결과 없음')
         res.send('noResult')
     } else {
@@ -55,23 +55,44 @@ const search = async (query:Query, res:Response) => {
     }
 };
 
-const writeList = async(name:string, date:string, temp:string) => {
+const userSearch = async (obj: searchUserQuery) => {
+    const query = { name: obj.name, phone: obj.phone, address: obj.address }
+    const arr = await dbMap.get('user-list').find(query).toArray();
+    if (arr.length == 0) {
+        return 'noResult'
+    } else {
+        arr[0].type = arr[0].type.replace('image/', '')
+        return `${arr[0].name}.${arr[0].type}`
+    }
+}
+
+const userDelete = async (obj: searchUserQuery) => {
+    const query = { name: obj.name, phone: obj.phone, address: obj.address }
+    const arr = await dbMap.get('user-list').deleteOne(query)
+    if(arr.deletedCount == 0) {
+        return 'noDelete'
+    } else {
+        return 'deleted'
+    }
+}
+
+const writeList = async (name: string, date: string, temp: string) => {
     console.log(temp)
     await dbMap.get('visit-list').insertOne({
         "name": name,
         "date": new Date(date),
-        "temp":  parseFloat(temp),
+        "temp": parseFloat(temp),
     })
     console.log('uploaded')
 };
 
-const addUser = (obj:UserQuery) => {
+const addUser = (obj: UserQuery) => {
     return dbMap.get('user-list').insertOne(obj);
 };
 
-const findHash = async(hash:string, time:string, temp:string, res:Response) => {
-    const arr = await dbMap.get('user-list').find({ "hash": hash}).toArray();
-    if(arr.length == 0) {
+const findHash = async (hash: string, time: string, temp: string, res: Response) => {
+    const arr = await dbMap.get('user-list').find({ "hash": hash }).toArray();
+    if (arr.length == 0) {
         console.log('등록되지않은 사용자입니다.')
         res.end('noUser')
     } else {
@@ -80,4 +101,4 @@ const findHash = async(hash:string, time:string, temp:string, res:Response) => {
     }
 }
 
-export { search, writeList, addUser, findHash };
+export { search, userSearch, userDelete, writeList, addUser, findHash };
